@@ -99,12 +99,12 @@ This repo mainly uses:
 
 ## 📖 How to Use
 
-bash
-Copy code
-git clone https://github.com/your-username/Notes.git <br>
+```
+git clone https://github.com/claracayres/Notes.git
+```
 Open the repo in VS Code or navigate through folders manually to explore and update notes.
 
-💡 Contributions
+## 💡 Contributions
 This is a personal brain dump — but if you’ve got ideas, cool references, or corrections, feel free to open an issue or message me.
 
 With 💙,
