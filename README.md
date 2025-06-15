@@ -6,7 +6,7 @@
 
 A personal knowledge base where I collect everything I’m learning — from coding and tools to tech concepts, command line tricks, and more. These notes help me study, review, and quickly reference ideas in the future.
 
----
+***
 
 ## 🧭 Table of Contents
 
