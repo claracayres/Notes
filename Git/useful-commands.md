@@ -11,10 +11,10 @@ When starting out with a new repository, you only need to do it
 once; either locally, then push to GitHub, or by cloning an
 existing repository.
 ````
-git init
+$ git init
 # Turn an existing directory into a git repository
 
-git clone [url]
+$ git clone [url]
 # Clone an existing repository from GitHub, including all of the files, branches, and commits
 ````
 
@@ -25,12 +25,12 @@ You can find helpful templates for `.gitignore` files at github.com/github/gitig
 ## Configure tooling
 User information for alll local repositories
 ```
-git config --global user.name "Your Name"
+$ git config --global user.name "Your Name"
 # Set your name for commits
 
-git config --global user.email "your_email@example.com"
+$ git config --global user.email "your_email@example.com"
 # Set your email for commits
 
-git config --global color.ui auto
+$ git config --global color.ui auto
 # Enable color in the command line interface
 ````
