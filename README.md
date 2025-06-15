@@ -101,7 +101,7 @@ This repo mainly uses:
 
 bash
 Copy code
-git clone https://github.com/your-username/Notes.git
+git clone https://github.com/your-username/Notes.git <br>
 Open the repo in VS Code or navigate through folders manually to explore and update notes.
 
 💡 Contributions
