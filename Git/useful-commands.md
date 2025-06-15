@@ -1,7 +1,7 @@
 ## Install
-[GitHub for Windows](https://windows.github.com)
-[GitHub for Mac](https://mac.github.com)
-[Git for All Platforms](http://git-scm.com)
+[GitHub for Windows](https://windows.github.com)<br>
+[GitHub for Mac](https://mac.github.com)<br>
+[Git for All Platforms](http://git-scm.com)<br>
 
 Git distributions for Linux and POSIX systems are available on
 the official Git SCM web site.
@@ -16,4 +16,21 @@ git init
 
 git clone [url]
 # Clone an existing repository from GitHub, including all of the files, branches, and commits
+````
+
+## The .gitignore file
+The `.gitignore` file is used to specify files or directories that should be ignored by Git.<br>
+You can find helpful templates for `.gitignore` files at github.com/github/gitignore.
+
+## Configure tooling
+User information for alll local repositories
+```
+git config --global user.name "Your Name"
+# Set your name for commits
+
+git config --global user.email "your_email@example.com"
+# Set your email for commits
+
+git config --global color.ui auto
+# Enable color in the command line interface
 ````
