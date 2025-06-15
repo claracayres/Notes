@@ -10,3 +10,10 @@ the official Git SCM web site.
 When starting out with a new repository, you only need to do it
 once; either locally, then push to GitHub, or by cloning an
 existing repository.
+````
+git init
+# Turn an existing directory into a git repository
+
+git clone [url]
+# Clone an existing repository from GitHub, including all of the files, branches, and commits
+````
