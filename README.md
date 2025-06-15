@@ -6,7 +6,7 @@
 
 A personal knowledge base where I collect everything I’m learning — from coding and tools to tech concepts, command line tricks, and more. These notes help me study, review, and quickly reference ideas in the future.
 
-***
+---
 
 ## 🧭 Table of Contents
 
@@ -61,13 +61,14 @@ Notes/
 │   └── random-tricks.md
 └── README.md
 ```
+---
 
 ## 📄 Notes by Topic
 Click below to explore the notes (links will update as content grows):
 
-💻 Git – Commands and workflows
+💻 [Git](./Git/useful-commands.md) – Commands and workflows
 
-🖥️ Unix/Linux – Terminal tips and shell scripting
+🖥️ [Unix/Linux](./Unix/terminal-shortcuts.md) – Terminal tips and shell scripting
 
 📜 JavaScript – Async, promises, tricks
 
@@ -81,6 +82,8 @@ Click below to explore the notes (links will update as content grows):
 
 📚 General – Miscellaneous dev tips
 
+---
+
 ## 🛠 Tools & Technologies
 This repo mainly uses:
 
@@ -92,7 +95,10 @@ This repo mainly uses:
 
 - Optional: Obsidian or Notion (for local syncing)
 
-📖 How to Use
+---
+
+## 📖 How to Use
+
 bash
 Copy code
 git clone https://github.com/your-username/Notes.git
@@ -103,6 +109,3 @@ This is a personal brain dump — but if you’ve got ideas, cool references, or
 
 With 💙,
 Maria Clara 🌸
-
-yaml
-Copy code
