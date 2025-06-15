@@ -107,5 +107,5 @@ Open the repo in VS Code or navigate through folders manually to explore and upd
 ## 💡 Contributions
 This is a personal brain dump — but if you’ve got ideas, cool references, or corrections, feel free to open an issue or message me.
 
-With 💙,
+With 💙,<br>
 Maria Clara 🌸
