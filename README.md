@@ -70,6 +70,8 @@ Click below to explore the notes (links will update as content grows):
 
 🖥️ [Unix/Linux](./Unix/terminal-shortcuts.md) – Terminal tips and shell scripting
 
+💻 [Web Development](./Web-dev) – HTML, CSS, and more
+
 📜 JavaScript – Async, promises, tricks
 
 🐍 Python – Data types and structures
