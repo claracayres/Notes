@@ -211,7 +211,6 @@ Use the following tags to organize your HTML document into structured sections.
 Meta tags for SEO
 ```
 <meta name="description"/>
-```
 <!-- Specifies the description of a web page. -->
 
 <meta name="title"/>
@@ -223,4 +222,51 @@ Meta tags for SEO
 <meta name="language" content="english">
 <!-- Specifies the language of a web page. -->
 
-<>
+<meta name="robots" content="index, follow"/>
+<!-- Specifies the instructions for search engine crawlers. -->
+
+<meta name"google> />
+<!--  Tells Google not to show the sitelinks search box for your page when showing search results. -->
+
+<meta name="googlebot" content="notranslate"/>
+<!-- Tells Googlebot not to translate the page. -->
+
+<meta name="revised" content="Tuesday, June 17th, 2025, 7:27 pm" />
+<!-- Specifies the date of the last revision of a web page. -->
+
+<meta name="rating" content="safe for kids">
+<!-- Specifies the rating of a web page. -->
+
+<meta name="copyright" content="Copyright 2025">
+<!-- Specifies the copyright information of a web page. -->
+```
+
+## Meta http-equiv="..."/> tags
+
+```
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+<!-- Specifies the character encoding of a web page. -->
+
+<meta http-equiv="default-style"/>
+<!-- Specifies the default style of a web page. -->
+
+<meta http-equiv="refresh"/>
+<!-- Specifies the time interval between page refreshes. -->
+
+<meta http-equiv="Content-language"/>
+<!-- Specifies the language of a web page. -->
+
+<meta http-equiv="Cache-control" content="no-cache">
+<!-- Specifies the caching behavior of a web page. -->
+```
+## Responsive design/mobile meta tags 
+```
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!-- Specifies the viewport settings for a web page. -->
+
+<meta name="format-detection" content="telephone=yes"/>
+<!-- Indicates that telephone numbers should appear as hypertext links that can be clicked to make a phone call . -->
+
+<meta name="HandheldFriendly" content="true"/>
+<!-- Indicates that a web page is optimized for handheld devices. -->
+```
