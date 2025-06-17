@@ -205,3 +205,22 @@ Use the following tags to organize your HTML document into structured sections.
 <col>
 <!-- Defines a semantic column in a table. -->
 ```
+
+## Meta tags
+
+Meta tags for SEO
+```
+<meta name="description"/>
+´´´
+<!-- Specifies the description of a web page. -->
+
+<meta name="title"/>
+<!-- Specifies the title of a web page. -->
+
+<meta name="author" content="name">
+<!-- Specifies the author of a web page. -->
+
+<meta name="language" content="english">
+<!-- Specifies the language of a web page. -->
+
+<>
