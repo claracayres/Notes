@@ -211,7 +211,7 @@ Use the following tags to organize your HTML document into structured sections.
 Meta tags for SEO
 ```
 <meta name="description"/>
-´´´
+```
 <!-- Specifies the description of a web page. -->
 
 <meta name="title"/>
