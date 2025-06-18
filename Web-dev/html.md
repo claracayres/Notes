@@ -270,3 +270,21 @@ Meta tags for SEO
 <meta name="HandheldFriendly" content="true"/>
 <!-- Indicates that a web page is optimized for handheld devices. -->
 ```
+
+## Input types
+Button
+Displays a clickable button.
+```
+<input type="button" value="Click me" onclick="msg()"/>
+```
+Also, you can use the following attribute with the added benefit of being able to place content like text or images inside the tag.:
+```
+<button onclick="alert('Are you sure?')">
+    <img src="delete.png" />
+    Delete
+</button>
+```
+Checkbox
+Displays a checkbox that can be checked or unchecked.
+```
+<input>
