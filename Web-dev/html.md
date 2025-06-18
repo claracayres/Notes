@@ -287,4 +287,147 @@ Also, you can use the following attribute with the added benefit of being able t
 Checkbox
 Displays a checkbox that can be checked or unchecked.
 ```
-<input>
+<input type="checkbox" id="cat" name="cat" value="cat"/>
+<label for="cat"> I like cats</label>
+<input type="checkbox" id="dog" name="dog" value="dog"/>
+<label for="dog"> I like dogs</label>
+```
+Radio
+Displays a radio button that can be checked or unchecked.
+```
+<input type="radio" id="light" name="theme" value="Light"> 
+<label for="light">Light</label> 
+<input type="radio" id="dark" name="theme" value="Dark"> 
+<label for="dark">Dark</label> 
+```
+Submit
+Displays a submit button that can be clicked to submit a form.
+```
+<form action="myserver.com" method="POST">
+  …
+<input type="submit" value="Submit" />
+</form>
+```
+Text
+Displays a text input field that can be filled in by the user.
+```
+<label for="fname">First name:</label> 
+<input type="text" id="fname" name="fname"> 
+```
+Password
+Displays a password input field that can be filled in by the user, but the input is hidden for security reasons.
+```
+<label for="pwd">Password:</label> 
+<input type="password" id="pwd" name="pwd"> 
+```
+Date
+Displays a date input field that can be filled in by the user.
+```
+<label for="dob">Date of birth:</label>
+<input type="date" id="dob" name="date of birth">
+```
+Datetime-local
+Displays a date and time input field that can be filled in by the user.
+```
+<label for="birthdaytime">Birthday (date and time):</label>
+<input type="datetime-local" id="birthdaytime" name="birthdaytime">
+```
+Email
+Displays an email input field that can be filled in by the user.
+```
+<input type="email" id="email" name="email">
+```
+File
+Displays a file input field that can be used to upload a file.
+```
+<label for="myfile">Select a file:</label>
+<input type="file" id="myfile" name="myfile">
+```
+Hidden
+Displays a hidden input field that can be used to store a value that is not visible to the user
+```
+<input type="hidden" id="custId" name="custId" value="3487">
+```
+Image
+Displays an image input field that can be used to upload an image.
+```
+<input type="image"src="submit_img.png" alt="Submit" width="48" height="48">
+```
+Number
+Displays a number input field that can be filled in by the user.
+```
+<input type="number" id="quantity" name="quantity" min="1" max="5">
+```
+Range
+Displays a range input field that can be filled in by the user.
+```
+<label for="volume">Volume:</label>
+<input type="range" id="volume" name="volume" min="0" max="10">
+```
+Reset
+Displays a reset button that can be used to reset the form to its default state.
+```
+<input type="reset">
+```
+Search
+Displays a search input field that can be filled in by the user.
+```
+<input type="search" id="gsearch" name="gsearch">
+```
+Time
+Displays a time input field that can be filled in by the user.
+```
+<label for="appt">Select a time:</label>
+<input type="time" id="appt" name="appt">
+```
+Tel
+Displays a telephone number input field that can be filled in by the user.
+```
+<label for="phone">Enter your phone number:</label>
+<input type="tel" id="phone" name="phone" pattern="[+]{1}[0-9]{11,14}">
+```
+URL
+Displays a URL input field that can be filled in by the user.
+```
+<label for="homepage">Add your homepage:</label>
+<input type="url" id="homepage" name="homepage">
+```
+Week
+Displays a week input field that can be filled in by the user.
+```
+<label for="week">Select a week:</label>
+<input type="week" id="week" name="week">
+```
+Month
+Displays a month input field that can be filled in by the user.
+```
+<label for="bdaymonth">Birthday (month and year):</label>
+<input type="month" id="bdaymonth" name="bdaymonth" min="1930-01" value="2000-01">
+```
+## Interactive form elements
+Required
+```
+<input type="text" id="firstName" name="firstName" required> 
+```
+Maxlength 
+```
+<input type="text" id="description" name="description" maxlength="50"> 
+```
+Minlength 
+```
+<input type="password" id="password" name="password" minlength="8"> 
+```
+Min and max attributes 
+```
+<input type="number" id="quantity" name="quantity" min="1" max="10"> 
+
+<input type="range" id="volume" name="volume" min="1" max="100"> 
+```
+Multiple
+```
+<input type="file" id="gallery" name="gallery" multiple> 
+```
+Pattern
+```
+<input type="tel" id="phone" name="phone" pattern=”^(?:0|\+?44)(?:\d\s?){9,10}$” > 
+```
