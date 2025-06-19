@@ -528,3 +528,10 @@ The `<iframe>` element is used to embed another document within the current HTML
 - `seamless` specifies whether the iframe should be seamless or not.
 - `src` specifies the source of the iframe.
 - `loading` specifies how the iframe should be loaded.
+- `title` specifies the title of the iframe.
+
+## Canvas
+The `<canvas>` element is used to draw graphics, animations, and games.
+- `height` specifies the height of the canvas.
+- `width` specifies the width of the canvas.
+- `style` attribute is used to specify the style of the canvas.
