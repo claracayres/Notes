@@ -431,3 +431,41 @@ Pattern
 ```
 <input type="tel" id="phone" name="phone" pattern=”^(?:0|\+?44)(?:\d\s?){9,10}$” > 
 ```
+
+## Select tag
+The `<select>` element is used to create a drop-down list.<br>
+The `<select>` element is most often used in a form, to collect user input.<br>
+The name attribute is needed to reference the form data after the form is submitted (if you omit the name attribute, no data from the drop-down list will be submitted).<br>
+The id attribute is needed to associate the drop-down list with a label.<br>
+The `<option>` tags inside the `<select>` element define the available options in the drop-down list.<br>
+```
+<label for="colors">Choose a color:</label>
+
+<select name="colors" id="colors">
+  <option value="red">Red</option>
+  <option value="purple">Purple</option>
+  <option value="green">Green</option>
+  <option value="blue">Blue</option>
+</select>
+```
+## Text area
+The `<textarea>` element is used to create a multi-line text input field.
+- `cols` defines the visible width of the text area. Default value is 20.
+- `rows` defines the visible height of the text area. Default value is 10.
+- `wrap` defines whether the text should wrap when it reaches the edge of the text area.
+- `readonly` makes the text area read-only.
+- `form` specifies which form the text area belongs to.
+- `maxlength` specifies the maximum number of characters that may be entered in the text area.
+- `minlength` specifies the minimum number of characters that must be entered in the text area.
+
+## Field set
+The `<fieldset>` element is used to group related form elements in a form.
+- `legend` defines a caption for the fieldset.
+- `disabled` makes the fieldset disabled.
+
+## Data list
+The `<datalist>` element is used to define a list of pre-defined options for input elements.
+- `id` specifies the id of the datalist element.
+- `form` specifies which form the datalist belongs to.
+- `value` specifies the value of the option.
+
