@@ -469,3 +469,62 @@ The `<datalist>` element is used to define a list of pre-defined options for inp
 - `form` specifies which form the datalist belongs to.
 - `value` specifies the value of the option.
 
+## Videos and audio
+The `<video>` element is used to embed video content.
+- `autoplay` specifies that the video should start playing as soon as it is loaded.
+- `controls` specifies that video controls should be displayed.
+- `height` specifies the height of the video player.
+- `loop` specifies that the video should start playing again after it has finished.
+- `muted` specifies that the audio should be muted.
+- `preload` specifies whether the video should be preloaded or not.
+- `width` specifies the width of the video player.
+
+The `<audio>` element is used to embed audio content.
+The `<source>` element is used to specify multiple video and audio files for the video element.
+
+## Images
+The `<img>` element is used to embed images in a document.
+- `alt` specifies an alternate text for the image.
+- `crossorigin` specifies how the browser should handle the image if it is loaded from a different origin.
+- `height` specifies the height of the image.
+- `ismap` specifies that the image should be used as a server-side image map.
+- `longdesc` specifies a long description of the image.
+- `referrerpolicy` specifies how the browser should handle the image if it is loaded from a different origin.
+- `sizes` specifies the size of the image.
+- `src` specifies the source of the image.
+- `srcset` specifies a list of images to use in different situations.
+
+The `<figure>` element is used to group a figure and its caption together. 
+The `<figcaption>` elements are used to define a figure and its caption.
+```
+<figure> 
+   <img src="photo.png" width="320" alt="My Profile Photo"> 
+   <figcaption>A photo of myself on a beach in 2015</figcaption> 
+</figure>
+```
+Like videos and audio, the web browser only supports specific file types. These file types are: 
+- .APNG – Animated Portable Network Graphics 
+- .AVIF – AV1 Image Format 
+- .GIF – Graphics Interchange Format 
+- .JPEG / .JPG – Joint Photographic Expert Group image format 
+- .PNG – Portable Network Graphics 
+- .SVG – Scalable Vector Graphics 
+- .WEBP – Web Picture Format 
+
+## iFrame
+The `<iframe>` element is used to embed another document within the current HTML document.
+- `frameborder` specifies the border of the iframe.
+- `height` specifies the height of the iframe.
+- `width` specifies the width of the iframe.
+- `srcdoc` specifies the content of the iframe.
+- `sandbox` specifies whether the iframe should be sandboxed or not.
+    - allow-downloads Allows the user to download an item 
+    - allow-forms Allows the user to submit forms 
+    - allow-modals The resource can open modal windows 
+    - allow-orientation-lock Lets the resource lock the screen orientation 
+    - allow-popups Allows popups to open 
+    - allow-presentation Allows a presentation session to start 
+    - allow-scripts Lets the resource run scripts without creating popup windows
+- `seamless` specifies whether the iframe should be seamless or not.
+- `src` specifies the source of the iframe.
+- `loading` specifies how the iframe should be loaded.
