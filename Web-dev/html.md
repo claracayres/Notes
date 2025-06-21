@@ -1,6 +1,6 @@
 ## Sectioning tags
 Use the following tags to organize your HTML document into structured sections.
-```
+```html
 <header>
 <!-- The header of a content section -->
 
@@ -33,7 +33,7 @@ Use the following tags to organize your HTML document into structured sections.
 ```
 
 ## Content tags
-```
+```html
 <blockquote>
 <!-- Used to describe a quotation. -->
 
@@ -75,7 +75,7 @@ Use the following tags to organize your HTML document into structured sections.
 ```
 
 ## Inline tags
-```
+```html
 <a>
 <!-- An anchor link to another HTML document. -->
 
@@ -141,7 +141,7 @@ Use the following tags to organize your HTML document into structured sections.
 ```
 
 ## Embedded content and media tags
-```
+```html
 <audio>
 <!-- Used to embed audio in web pages. -->
 
@@ -174,7 +174,7 @@ Use the following tags to organize your HTML document into structured sections.
 ```
 
 ## Table tags
-```
+```html
 <table>
 <!-- Defines a table element to display table data within a web page. -->
 
@@ -209,7 +209,7 @@ Use the following tags to organize your HTML document into structured sections.
 ## Meta tags
 
 Meta tags for SEO
-```
+```html
 <meta name="description"/>
 <!-- Specifies the description of a web page. -->
 
@@ -243,7 +243,7 @@ Meta tags for SEO
 
 ## Meta http-equiv="..."/> tags
 
-```
+```html
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
 <!-- Specifies the character encoding of a web page. -->
 
@@ -260,7 +260,7 @@ Meta tags for SEO
 <!-- Specifies the caching behavior of a web page. -->
 ```
 ## Responsive design/mobile meta tags 
-```
+```html
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <!-- Specifies the viewport settings for a web page. -->
 
@@ -272,163 +272,163 @@ Meta tags for SEO
 ```
 
 ## Input types
-Button
+### Button
 Displays a clickable button.
-```
+```html
 <input type="button" value="Click me" onclick="msg()"/>
 ```
 Also, you can use the following attribute with the added benefit of being able to place content like text or images inside the tag.:
-```
+```html
 <button onclick="alert('Are you sure?')">
     <img src="delete.png" />
     Delete
 </button>
 ```
-Checkbox
+### Checkbox
 Displays a checkbox that can be checked or unchecked.
-```
+```html
 <input type="checkbox" id="cat" name="cat" value="cat"/>
 <label for="cat"> I like cats</label>
 <input type="checkbox" id="dog" name="dog" value="dog"/>
 <label for="dog"> I like dogs</label>
 ```
-Radio
+### Radio
 Displays a radio button that can be checked or unchecked.
-```
+```html
 <input type="radio" id="light" name="theme" value="Light"> 
 <label for="light">Light</label> 
 <input type="radio" id="dark" name="theme" value="Dark"> 
 <label for="dark">Dark</label> 
 ```
-Submit
+### Submit
 Displays a submit button that can be clicked to submit a form.
-```
+```html
 <form action="myserver.com" method="POST">
   …
 <input type="submit" value="Submit" />
 </form>
 ```
-Text
+### Text
 Displays a text input field that can be filled in by the user.
-```
+```html
 <label for="fname">First name:</label> 
 <input type="text" id="fname" name="fname"> 
 ```
-Password
+### Password
 Displays a password input field that can be filled in by the user, but the input is hidden for security reasons.
-```
+```html
 <label for="pwd">Password:</label> 
 <input type="password" id="pwd" name="pwd"> 
 ```
-Date
+### Date
 Displays a date input field that can be filled in by the user.
-```
+```html
 <label for="dob">Date of birth:</label>
 <input type="date" id="dob" name="date of birth">
 ```
-Datetime-local
+### Datetime-local
 Displays a date and time input field that can be filled in by the user.
-```
+```html
 <label for="birthdaytime">Birthday (date and time):</label>
 <input type="datetime-local" id="birthdaytime" name="birthdaytime">
 ```
-Email
+### Email
 Displays an email input field that can be filled in by the user.
-```
+```html
 <input type="email" id="email" name="email">
 ```
-File
+### File
 Displays a file input field that can be used to upload a file.
-```
+```html
 <label for="myfile">Select a file:</label>
 <input type="file" id="myfile" name="myfile">
 ```
-Hidden
+### Hidden
 Displays a hidden input field that can be used to store a value that is not visible to the user
-```
+```html
 <input type="hidden" id="custId" name="custId" value="3487">
 ```
-Image
+### Image
 Displays an image input field that can be used to upload an image.
-```
+```html
 <input type="image"src="submit_img.png" alt="Submit" width="48" height="48">
 ```
-Number
+### Number
 Displays a number input field that can be filled in by the user.
-```
+```html
 <input type="number" id="quantity" name="quantity" min="1" max="5">
 ```
-Range
+### Range
 Displays a range input field that can be filled in by the user.
-```
+```html
 <label for="volume">Volume:</label>
 <input type="range" id="volume" name="volume" min="0" max="10">
 ```
-Reset
+### Reset
 Displays a reset button that can be used to reset the form to its default state.
-```
+```html
 <input type="reset">
 ```
-Search
+### Search
 Displays a search input field that can be filled in by the user.
-```
+```html
 <input type="search" id="gsearch" name="gsearch">
 ```
-Time
+### Time
 Displays a time input field that can be filled in by the user.
-```
+```html
 <label for="appt">Select a time:</label>
 <input type="time" id="appt" name="appt">
 ```
-Tel
+### Tel
 Displays a telephone number input field that can be filled in by the user.
-```
+```html
 <label for="phone">Enter your phone number:</label>
 <input type="tel" id="phone" name="phone" pattern="[+]{1}[0-9]{11,14}">
 ```
-URL
+### URL
 Displays a URL input field that can be filled in by the user.
-```
+```html
 <label for="homepage">Add your homepage:</label>
 <input type="url" id="homepage" name="homepage">
 ```
-Week
+### Week
 Displays a week input field that can be filled in by the user.
-```
+```html
 <label for="week">Select a week:</label>
 <input type="week" id="week" name="week">
 ```
-Month
+### Month
 Displays a month input field that can be filled in by the user.
-```
+```html
 <label for="bdaymonth">Birthday (month and year):</label>
 <input type="month" id="bdaymonth" name="bdaymonth" min="1930-01" value="2000-01">
 ```
 ## Interactive form elements
-Required
-```
+###Required
+```html
 <input type="text" id="firstName" name="firstName" required> 
 ```
-Maxlength 
-```
+### Maxlength 
+```html
 <input type="text" id="description" name="description" maxlength="50"> 
 ```
-Minlength 
-```
+### Minlength 
+```html
 <input type="password" id="password" name="password" minlength="8"> 
 ```
-Min and max attributes 
-```
+### Min and max attributes 
+```html 
 <input type="number" id="quantity" name="quantity" min="1" max="10"> 
 
 <input type="range" id="volume" name="volume" min="1" max="100"> 
 ```
-Multiple
-```
+### Multiple
+```html
 <input type="file" id="gallery" name="gallery" multiple> 
 ```
-Pattern
-```
+### Pattern
+```html
 <input type="tel" id="phone" name="phone" pattern=”^(?:0|\+?44)(?:\d\s?){9,10}$” > 
 ```
 
@@ -438,7 +438,7 @@ The `<select>` element is most often used in a form, to collect user input.<br>
 The name attribute is needed to reference the form data after the form is submitted (if you omit the name attribute, no data from the drop-down list will be submitted).<br>
 The id attribute is needed to associate the drop-down list with a label.<br>
 The `<option>` tags inside the `<select>` element define the available options in the drop-down list.<br>
-```
+```html
 <label for="colors">Choose a color:</label>
 
 <select name="colors" id="colors">
@@ -496,7 +496,7 @@ The `<img>` element is used to embed images in a document.
 
 The `<figure>` element is used to group a figure and its caption together. 
 The `<figcaption>` elements are used to define a figure and its caption.
-```
+```html
 <figure> 
    <img src="photo.png" width="320" alt="My Profile Photo"> 
    <figcaption>A photo of myself on a beach in 2015</figcaption> 
