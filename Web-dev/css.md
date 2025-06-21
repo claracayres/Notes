@@ -476,10 +476,15 @@ CSS selectors are used to select elements in an HTML document. They are used in 
 | `:active` | Selects elements when the user clicks on them |
 | `:focus` | Selects elements when the user gives them focus |
 ### Pseudo-Elements
-| Pseudo-Element | Description |
-| --- | --- |
-| `::before` | Selects the element before the content of the element |
-| `::after` | Selects the element after the content of the element |
+
+| Pseudo-Element    | Description                                               |
+|-------------------|----------------------------------------------------------|
+| `::before`        | Inserts content before the content of the selected element |
+| `::after`         | Inserts content after the content of the selected element  |
+| `::first-letter`  | Selects the first letter of the selected element           |
+| `::first-line`    | Selects the first line of the selected element             |
+| `::selection`     | Selects the portion of an element that is selected by the user |
+| `::placeholder`   | Selects the placeholder text of an input or textarea       |
 
 # CSS Properties
 ## CSS Properties
