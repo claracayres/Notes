@@ -440,23 +440,82 @@ Controls how auto-placed items are inserted into the grid.
 }
 
 .article {
-    grid-column: span 8;             /* Main content */
+    grid-column: 1 / span 8;      /* Main content spans 8 columns */
 }
 
 .sidebar {
-    grid-column: span 4;             /* Sidebar */
+    grid-column: 9 / span 4;      /* Sidebar spans last 4 columns */
 }
 
 .feature {
-    grid-column: 1 / -1;             /* Full width */
-    grid-row: span 2;                /* Double height */
+    grid-column: 1 / -1;          /* Full width across all columns */
+    grid-row: span 2;             /* Spans two rows for extra height */
 }
 ```
-e { grid-area: aside; }
-.footer { grid-area: footer; }
-```
 
-### Complex Grid with Overlapping
+# Selectors
+## CSS Selectors
+CSS selectors are used to select elements in an HTML document. They are used in conjunction with CSS properties to apply styles to the selected elements.
+### Basic Selectors
+| Selector | Description |
+| --- | --- |
+| `*` | Selects all elements |
+| `element` | Selects elements of type `element` |
+| `.class` | Selects elements with class `class` |
+| `#id` | Selects elements with id `id` |
+### Combinators
+| Combinator | Description |
+| --- | --- |
+| `>` | Selects elements that are direct children of the previous element |
+| `+` | Selects elements that are adjacent to the previous element |
+| `~` | Selects elements that are siblings of the previous element |
+### Pseudo-Classes
+| Pseudo-Class | Description |
+| --- | --- |
+| `:hover` | Selects elements when the user hovers over them |
+| `:active` | Selects elements when the user clicks on them |
+| `:focus` | Selects elements when the user gives them focus |
+### Pseudo-Elements
+| Pseudo-Element | Description |
+| --- | --- |
+| `::before` | Selects the element before the content of the element |
+| `::after` | Selects the element after the content of the element |
 
-```css
-.gall
+# CSS Properties
+## CSS Properties
+CSS properties are used to define the styles of the selected elements. They are used in conjunction with CSS selectors to apply styles to the selected elements.
+### Color Properties
+| Property | Description |
+| --- | --- |
+| `color` | Sets the color of the text |
+| `background-color` | Sets the background color of the element |
+### Font Properties
+| Property | Description |
+| --- | --- |
+| `font-family` | Sets the font family of the text |
+| `font-size` | Sets the font size of the text |
+| `font-style` | Sets the font style of the text |
+### Layout Properties
+| Property | Description |
+| --- | --- |
+| `width` | Sets the width of the element |
+| `height` | Sets the height of the element |
+| `margin` | Sets the margin of the element |
+### Background Properties
+| Property | Description |
+| --- | --- |
+| `background-image` | Sets the background image of the element |
+| `background-repeat` | Sets the background repeat of the element |
+### Border Properties
+| Property | Description |
+| --- | --- |
+| `border-width` | Sets the border width of the element |
+| `border-style` | Sets the border style of the element |
+### Positioning Properties
+| Property | Description |
+| --- | --- |
+| `position` | Sets the position of the element |
+### Display Properties
+| Property | Description |
+| --- | --- |
+| `display` | Sets the display of the element |

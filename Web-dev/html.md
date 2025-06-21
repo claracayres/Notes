@@ -405,7 +405,7 @@ Displays a month input field that can be filled in by the user.
 <input type="month" id="bdaymonth" name="bdaymonth" min="1930-01" value="2000-01">
 ```
 ## Interactive form elements
-###Required
+### Required
 ```html
 <input type="text" id="firstName" name="firstName" required> 
 ```
