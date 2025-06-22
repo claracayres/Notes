@@ -491,7 +491,7 @@ CSS selectors are used to select elements in an HTML document. They are used in 
 | `[attribute]` | `[attribute]` | `[href] { }` | Elements with specified attribute |
 | `[attribute=value]` | `[attribute=value]` | `[lang="fr"] { }` | Elements with attribute equal to value |
 | `[attribute~=value]` | `[attribute~=value]` | `[input~=hello] { }` | Elements with attribute containing whitespace-separated substring |
-| `[attribute|=value]` | `[attribute|=value]` | `[lang|=en] { }` | Elements with attribute equal to value or value followed by hyphen |
+| `[attribute/=value]` | `[attribute/=value]` | `[lang/=en] { }` | Elements with attribute equal to value or value followed by hyphen |
 | `[attribute^=value]` | `[attribute^=value]` | `a[href^="https"] { }` | Elements with attribute value beginning with specified string |
 | `[attribute$=value]` | `[attribute$=value]` | `a[href$=".docx"] { }` | Elements with attribute value ending with specified string |
 | `[attribute*=value]` | `[attribute*=value]` | `a[href*="meta"] { }` | Elements with attribute value containing specified substring |
@@ -978,3 +978,38 @@ CSS properties are used to define the styles of the selected elements. They are 
 | Property | Description |
 | --- | --- |
 | `display` | Sets the display of the element |
+
+# Text effects
+| Property | Values | Description |
+| -------- | ------ | ----------- |
+| `Text-transform` | None, uppercase, lowercase, capitalize, full-width | Modify text properties |
+| `Font-style` | Normal, italic, oblique | Font styling option such as italics |
+| `Font-weight` | Normal, weight, lighter, bolder, 100-900 | Other font styling options like change of emphasis such as making text bold |
+| `Text-decoration` | None, underline, overline, line-through | Shorthand for auxiliary elements added to text using other properties such as text-decoration-line |
+
+### Additional Text Effect Properties
+
+| Property                | Description                                                        |
+|-------------------------|--------------------------------------------------------------------|
+| `text-align`            | Horizontal alignment of text                                       |
+| `text-align-last`       | Alignment for the last line when text is justified                 |
+| `text-combine-upright`  | Combines multiple characters into a single upright character space |
+| `text-decoration-color` | Color configuration of text decoration                             |
+| `text-decoration-line`  | Line type for text decoration (underline, overline, etc.)          |
+| `text-decoration-style` | Style for decoration lines (wavy, dotted, etc.)                    |
+| `text-decoration-thickness` | Thickness of the decoration line                               |
+| `text-emphasis`         | Shorthand for emphasis marks (color and style)                     |
+| `text-indent`           | Indentation of the first line                                      |
+| `text-justify`          | Justification method when text-align is "justify"                  |
+| `text-orientation`      | Orientation of text in a line (sideways, upright, etc.)            |
+| `text-shadow`           | Adds shadow effects to text                                        |
+| `text-underline-position` | Position of underline decoration                                 |
+
+### Text Overflow and Wrapping Properties
+
+| Property         | Values                                 | Description                                         |
+|------------------|----------------------------------------|-----------------------------------------------------|
+| `text-overflow`  | `clip`, `ellipsis`                     | Overflow behavior of text within container          |
+| `word-wrap`      | `normal`, `anywhere`, `break-word`     | Word wrapping behavior (alias for overflow-wrap)    |
+| `word-break`     | `normal`, `break-all`, `keep-all`, `break-word` | Word breaking behavior for long words      |
+| `writing-mode`   | `horizontal-tb`, `vertical-lr`, `vertical-rl` | Text direction (horizontal or vertical)      |

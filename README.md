@@ -42,12 +42,13 @@ No fancy rules — just clean, helpful notes for my future self. 🌱
 ```bash
 Notes/
 ├── git/
-│   └── useful-commands.md
+│   └── [useful-commands.md](./Git/useful-commands.md)
 ├── unix/
-│   └── terminal-shortcuts.md
+│   └── [terminal-shortcuts.md](./Unix/terminal-shortcuts.md)
 ├── web-dev/
-│   └── flexbox.md
-│   └── html.md
+│   └── [css.md](./Web-dev/css.md)
+│   └── [flexbox.md](./Web-dev/flexbox.md)
+│   └── [html.md](./Web-dev/html.md)
 ├── javascript/
 │   └── async-await.md
 ├── python/
