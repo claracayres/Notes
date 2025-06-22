@@ -453,38 +453,492 @@ Controls how auto-placed items are inserted into the grid.
 }
 ```
 
-# Selectors
-## CSS Selectors
-CSS selectors are used to select elements in an HTML document. They are used in conjunction with CSS properties to apply styles to the selected elements.
-### Basic Selectors
-| Selector | Description |
-| --- | --- |
-| `*` | Selects all elements |
-| `element` | Selects elements of type `element` |
-| `.class` | Selects elements with class `class` |
-| `#id` | Selects elements with id `id` |
-### Combinators
-| Combinator | Description |
-| --- | --- |
-| `>` | Selects elements that are direct children of the previous element |
-| `+` | Selects elements that are adjacent to the previous element |
-| `~` | Selects elements that are siblings of the previous element |
-### Pseudo-Classes
-| Pseudo-Class | Description |
-| --- | --- |
-| `:hover` | Selects elements when the user hovers over them |
-| `:active` | Selects elements when the user clicks on them |
-| `:focus` | Selects elements when the user gives them focus |
-### Pseudo-Elements
+# CSS Selectors Cheat Sheet
 
-| Pseudo-Element    | Description                                               |
-|-------------------|----------------------------------------------------------|
-| `::before`        | Inserts content before the content of the selected element |
-| `::after`         | Inserts content after the content of the selected element  |
-| `::first-letter`  | Selects the first letter of the selected element           |
-| `::first-line`    | Selects the first line of the selected element             |
-| `::selection`     | Selects the portion of an element that is selected by the user |
-| `::placeholder`   | Selects the placeholder text of an input or textarea       |
+CSS selectors are used to select elements in an HTML document. They are used in conjunction with CSS properties to apply styles to the selected elements.
+
+## Simple Selectors
+
+| Selector | Syntax | Example | Description |
+|----------|--------|---------|-------------|
+| Element | `element` | `div { }` | Selects all elements of specified type |
+| Class | `.class` | `.alpha { }` | Selects elements with specified class |
+| ID | `#id` | `#alpha { }` | Selects element with specified ID |
+| Universal | `*` | `* { }` | Selects all elements |
+
+## Variations of Simple Selectors
+
+| Elements | Syntax | Example | Description |
+|----------|--------|---------|-------------|
+| Two classes | `.first-class.second-class` | `.alpha.beta { }` | All elements with both classes |
+| Element and class | `element.class` | `p.alpha { }` | All alpha class elements inside `<p>` |
+| Multiple elements | `element, element` | `p, div { }` | All `<p>` and `<div>` elements |
+| Descendant | `element element` | `p div { }` | All `<div>` elements inside `<p>` |
+
+## Descendant Selectors/Combinators
+
+| Selector | Syntax | Example | Description |
+|----------|--------|---------|-------------|
+| Descendant | `element element` | `div p { }` | All `<p>` descendants of `<div>` |
+| Child | `element > element` | `div > p { }` | All `<p>` direct children of `<div>` |
+| Adjacent Sibling | `element + element` | `div + p { }` | `<p>` element directly after `<div>` |
+| General Sibling | `element ~ element` | `div ~ p { }` | All `<p>` element iterations after `<div>` |
+
+## Attribute Selectors
+
+| Selector | Syntax | Example | Description |
+|----------|--------|---------|-------------|
+| `[attribute]` | `[attribute]` | `[href] { }` | Elements with specified attribute |
+| `[attribute=value]` | `[attribute=value]` | `[lang="fr"] { }` | Elements with attribute equal to value |
+| `[attribute~=value]` | `[attribute~=value]` | `[input~=hello] { }` | Elements with attribute containing whitespace-separated substring |
+| `[attribute|=value]` | `[attribute|=value]` | `[lang|=en] { }` | Elements with attribute equal to value or value followed by hyphen |
+| `[attribute^=value]` | `[attribute^=value]` | `a[href^="https"] { }` | Elements with attribute value beginning with specified string |
+| `[attribute$=value]` | `[attribute$=value]` | `a[href$=".docx"] { }` | Elements with attribute value ending with specified string |
+| `[attribute*=value]` | `[attribute*=value]` | `a[href*="meta"] { }` | Elements with attribute value containing specified substring |
+
+## Pseudo-Classes
+
+### Interactive States
+| Pseudo-Class | Example | Description |
+|--------------|---------|-------------|
+| `:hover` | `p:hover { }` | Element on mouse hover |
+| `:active` | `a:active { }` | All active links |
+| `:focus` | `input:focus { }` | Input element under focus |
+| `:visited` | `a:visited { }` | All visited links |
+| `:link` | `a:link { }` | All unvisited links |
+
+### Form States
+| Pseudo-Class | Example | Description |
+|--------------|---------|-------------|
+| `:checked` | `input:checked { }` | All checked `<input>` elements |
+| `:disabled` | `input:disabled { }` | All disabled `<input>` elements |
+| `:enabled` | `input:enabled { }` | All enabled `<input>` elements |
+| `:default` | `input:default { }` | All default `<input>` elements |
+| `:invalid` | `input:invalid { }` | Input elements with invalid value |
+| `:valid` | `input:valid { }` | Input elements with valid value |
+| `:required` | `input:required { }` | Input elements with "required" attribute |
+| `:optional` | `input:optional { }` | Input elements with no "required" attribute |
+
+### Structural Pseudo-Classes
+| Pseudo-Class | Example | Description |
+|--------------|---------|-------------|
+| `:first-child` | `p:first-child { }` | Elements that are first child of parent |
+| `:last-child` | `p:last-child { }` | Elements that are last child of parent |
+| `:only-child` | `p:only-child { }` | Elements that are only child of parent |
+| `:first-of-type` | `p:first-of-type { }` | First element of its type within parent |
+| `:last-of-type` | `p:last-of-type { }` | Last element of its type within parent |
+| `:only-of-type` | `p:only-of-type { }` | Only element of its type within parent |
+| `:nth-child(n)` | `div:nth-child(3) { }` | Elements that are nth child of parent |
+| `:nth-last-child(n)` | `div:nth-last-child(3) { }` | Elements that are nth child from end |
+| `:nth-of-type(n)` | `p:nth-of-type(2) { }` | Second sibling of its type |
+| `:nth-last-of-type(n)` | `p:nth-last-of-type(2) { }` | Second sibling of its type from end |
+
+### Other Pseudo-Classes
+| Pseudo-Class | Example | Description |
+|--------------|---------|-------------|
+| `:empty` | `div:empty { }` | Elements with no children |
+| `:not(selector)` | `:not(div) { }` | Elements that don't match selector |
+| `:root` | `:root { }` | Root element of document |
+| `:fullscreen` | `:fullscreen { }` | Element in full-screen mode |
+
+## Pseudo-Elements
+
+| Pseudo-Element | Example | Description |
+|----------------|---------|-------------|
+| `::before` | `p::before { }` | Inserts content before element content |
+| `::after` | `p::after { }` | Inserts content after element content |
+| `::first-letter` | `p::first-letter { }` | First letter of element |
+| `::first-line` | `p::first-line { }` | First line of element |
+| `::selection` | `::selection { }` | Portion of element selected by user |
+| `::placeholder` | `input::placeholder { }` | Placeholder text of input elements |
+| `::marker` | `::marker { }` | Markers in a list |
+
+## Practical Examples
+
+### Basic Selectors in Action
+```css
+/* Element selector */
+h1 {
+    color: blue;
+}
+
+/* Class selector */
+.highlight {
+    background-color: yellow;
+}
+
+/* ID selector */
+#main-header {
+    font-size: 2rem;
+}
+
+/* Universal selector */
+* {
+    box-sizing: border-box;
+}
+```
+
+### Combinators Examples
+```css
+/* Descendant selector */
+article p {
+    line-height: 1.6;
+}
+
+/* Child selector */
+nav > ul {
+    list-style: none;
+}
+
+/* Adjacent sibling */
+h2 + p {
+    margin-top: 0;
+}
+
+/* General sibling */
+h2 ~ p {
+    color: #666;
+}
+```
+
+### Attribute Selectors Examples
+```css
+/* Elements with href attribute */
+[href] {
+    color: blue;
+}
+
+/* External links */
+a[href^="http"] {
+    color: red;
+}
+
+/* PDF links */
+a[href$=".pdf"]::after {
+    content: " (PDF)";
+}
+
+/* Links containing specific text */
+a[href*="download"] {
+    font-weight: bold;
+}
+```
+
+### Pseudo-Classes Examples
+```css
+/* Interactive states */
+button:hover {
+    background-color: #0056b3;
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* Form validation */
+input:valid {
+    border-color: green;
+}
+
+input:invalid {
+    border-color: red;
+}
+
+/* Structural selectors */
+li:first-child {
+    border-top: none;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Complex selectors */
+p:not(.special) {
+    color: #333;
+}
+```
+
+### Pseudo-Elements Examples
+```css
+/* Adding decorative content */
+.quote::before {
+    content: """;
+    font-size: 2em;
+}
+
+.quote::after {
+    content: """;
+    font-size: 2em;
+}
+
+/* Styling first letter */
+.article::first-letter {
+    font-size: 3em;
+    float: left;
+    line-height: 1;
+}
+
+/* Custom placeholder styling */
+input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* Custom list markers */
+li::marker {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+```
+
+# CSS Text Effects Cheat Sheet
+
+The effects developers use on text items on a web page are chosen mainly because of their styling and layout style. Interesting effects can be created by combining these with other CSS properties.
+
+The visual representation of text content can be changed by four main properties: `text-transform`, `font-style`, `font-weight` and `text-decoration`.
+
+## Main Text Effect Properties
+
+| Property | Values | Description |
+|----------|--------|-------------|
+| `text-transform` | `none`, `uppercase`, `lowercase`, `capitalize`, `full-width` | Modify text case properties |
+| `font-style` | `normal`, `italic`, `oblique` | Font styling options such as italics |
+| `font-weight` | `normal`, `bold`, `lighter`, `bolder`, `100-900` | Font weight options for emphasis |
+| `text-decoration` | `none`, `underline`, `overline`, `line-through` | Shorthand for text decoration lines |
+
+## Additional Text Styling Properties
+
+### Alignment Properties
+| Property | Description |
+|----------|-------------|
+| `text-align` | Horizontal alignment of text |
+| `text-align-last` | Alignment for the last line when text is justified |
+| `text-indent` | Indentation of the first line |
+| `text-justify` | Justification method when text-align is "justify" |
+
+### Decoration Properties
+| Property | Description |
+|----------|-------------|
+| `text-decoration-color` | Color configuration of text decoration |
+| `text-decoration-line` | Line type such as underline, overline, line-through |
+| `text-decoration-style` | Styles for decoration lines (solid, dotted, wavy, etc.) |
+| `text-decoration-thickness` | Thickness of the decoration line |
+| `text-underline-position` | Position of underline decoration |
+
+### Advanced Text Properties
+| Property | Description |
+|----------|-------------|
+| `text-combine-upright` | Combines multiple characters into single character space |
+| `text-emphasis` | Shorthand for emphasis marks (color and style) |
+| `text-orientation` | Text orientation in a line (sideways, upright, etc.) |
+| `text-shadow` | Adds shadow effects to text |
+
+## Text Overflow and Wrapping Properties
+
+| Property | Values | Description |
+|----------|--------|-------------|
+| `text-overflow` | `clip`, `ellipsis` | Overflow behavior of text within container |
+| `word-wrap` | `normal`, `anywhere`, `break-word` | Word wrapping behavior (alias for overflow-wrap) |
+| `word-break` | `normal`, `break-all`, `keep-all`, `break-word` | Word breaking behavior for long words |
+| `writing-mode` | `horizontal-tb`, `vertical-lr`, `vertical-rl` | Text direction (horizontal or vertical) |
+
+## Practical Examples
+
+### Basic Text Transformations
+```css
+.uppercase {
+    text-transform: uppercase;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+```
+
+### Text Decorations
+```css
+.underlined {
+    text-decoration: underline;
+    text-decoration-color: red;
+    text-decoration-style: wavy;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+}
+
+.overline {
+    text-decoration: overline;
+    text-decoration-style: double;
+}
+```
+
+### Text Alignment
+```css
+.centered {
+    text-align: center;
+}
+
+.justified {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.indented {
+    text-indent: 2em;
+}
+
+.right-aligned {
+    text-align: right;
+}
+```
+
+### Text Shadow Effects
+```css
+.simple-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.multiple-shadows {
+    text-shadow: 
+        1px 1px 2px red,
+        0 0 1em blue,
+        0 0 0.2em blue;
+}
+
+.glow-effect {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff;
+    color: #fff;
+}
+```
+
+### Text Overflow Handling
+```css
+.ellipsis {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.break-word {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.no-wrap {
+    white-space: nowrap;
+}
+```
+
+### Vertical Text
+```css
+.vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+}
+
+.sideways-text {
+    writing-mode: vertical-lr;
+    text-orientation: sideways;
+}
+```
+
+### Advanced Text Effects
+```css
+.emphasis-marks {
+    text-emphasis: filled circle;
+    text-emphasis-color: red;
+}
+
+.combined-effects {
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
+}
+```
+
+### Responsive Text
+```css
+.responsive-text {
+    font-size: clamp(1rem, 4vw, 2rem);
+    line-height: 1.4;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .responsive-text {
+        text-align: left;
+        font-size: 1rem;
+    }
+}
+```
+
+## Common Text Effect Combinations
+
+### Elegant Headings
+```css
+.elegant-heading {
+    font-family: 'Georgia', serif;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+```
+
+### Highlighted Text
+```css
+.highlight {
+    background: linear-gradient(120deg, #a8e6cf 0%, #dcedc1 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 0.2em;
+    background-position: 0 88%;
+    transition: background-size 0.25s ease-in;
+}
+
+.highlight:hover {
+    background-size: 100% 88%;
+}
+```
+
+### Typewriter Effect
+```css
+.typewriter {
+    overflow: hidden;
+    border-right: .15em solid orange;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation: 
+        typing 3.5s steps(40, end),
+        blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange; }
+}
+```
 
 # CSS Properties
 ## CSS Properties
