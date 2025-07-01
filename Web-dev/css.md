@@ -1013,3 +1013,115 @@ CSS properties are used to define the styles of the selected elements. They are 
 | `word-wrap`      | `normal`, `anywhere`, `break-word`     | Word wrapping behavior (alias for overflow-wrap)    |
 | `word-break`     | `normal`, `break-all`, `keep-all`, `break-word` | Word breaking behavior for long words      |
 | `writing-mode`   | `horizontal-tb`, `vertical-lr`, `vertical-rl` | Text direction (horizontal or vertical)      |
+
+# CSS Keyframes
+
+CSS keyframes are used to create smooth, complex animations by defining intermediate steps between the start and end states of an animation. Keyframes allow you to control the style changes at specific points during the animation sequence.
+
+## Syntax
+
+A keyframes rule is defined using the `@keyframes` at-rule, followed by a name and a block containing style rules for various points (percentages or keywords like `from` and `to`):
+
+```css
+@keyframes slide-in {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+```
+
+You can use percentages to define multiple steps:
+
+```css
+@keyframes bounce {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-30px); }
+    100% { transform: translateY(0); }
+}
+```
+
+## Applying Keyframes
+
+To use a keyframes animation, apply the `animation-name` and `animation-duration` (and optionally other animation properties) to an element:
+
+```css
+.element {
+    animation-name: slide-in;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: 1;
+}
+```
+
+Or use the shorthand:
+
+```css
+.element {
+    animation: bounce 1s infinite alternate;
+}
+```
+
+## Animation Properties
+
+| Property                   | Description                                      |
+|----------------------------|--------------------------------------------------|
+| `animation-name`           | Name of the keyframes to use                     |
+| `animation-duration`       | How long the animation takes (e.g., `2s`)        |
+| `animation-timing-function`| Easing function (e.g., `linear`, `ease-in`)      |
+| `animation-delay`          | Delay before animation starts                    |
+| `animation-iteration-count`| Number of times animation repeats (`infinite`)   |
+| `animation-direction`      | Direction (`normal`, `reverse`, `alternate`)     |
+| `animation-fill-mode`      | How styles apply before/after animation          |
+| `animation-play-state`     | Running or paused                                |
+
+## Practical Examples
+
+### Fade In Animation
+
+```css
+@keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.fade-in {
+    animation: fade-in 1s ease-in;
+}
+```
+
+### Spinning Loader
+
+```css
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+.loader {
+    animation: spin 1s linear infinite;
+}
+```
+
+### Pulsing Button
+
+```css
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 #ff6b6b; }
+    50%      { box-shadow: 0 0 0 10px rgba(255,107,107,0); }
+}
+
+.button {
+    animation: pulse 2s infinite;
+}
+```
+
+## Best Practices
+
+- Use `@keyframes` for complex, multi-step animations.
+- Keep animations short and subtle for better user experience.
+- Combine with `animation-fill-mode` for persistent end states.
+- Prefer hardware-accelerated properties like `transform` and `opacity` for smoother performance.
