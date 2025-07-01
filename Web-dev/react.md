@@ -917,3 +917,452 @@ test("renders counter and increments on click", () => {
 8. **Write tests for critical functionality**
 9. **Use ESLint and Prettier for code quality**
 10. **Keep learning and stay updated**
+
+## Customizing the Project
+
+So far, you've learned about React components. Now, let's focus on how to customize your project by exploring the software development approach, including the creation of separate component files, requirements gathering, and the ideal folder structure.
+
+### 🧱 Building a Layout
+
+Imagine you're tasked with building a slightly more complex website layout using React. Even if you're still learning how React works, you can already create meaningful designs.
+
+The layout in this case is simple and focused on typography, for a coding blog. No images needed — great! Your layout should include:
+
+- **Main Navigation**
+- **Promo Section** (Main Advertisement)
+- **List of Blog Post Previews**
+- **Footer**
+
+### 🗂 Organizing Your Code
+
+With the above layout in mind, how should you organize your project?
+
+According to the React documentation, there are two common approaches:
+
+1. **Grouping by Feature**
+2. **Grouping by File Type**
+
+They also recommend:
+
+- Avoiding deeply nested folders
+- Keeping it simple and not overthinking the structure
+- Spending no more than 5 minutes setting up a project (especially if you're a beginner)
+
+So, for a small project like this one, it's perfectly fine to just create a `components/` folder and drop all your components inside it.
+
+### 🚀 Building the App
+
+We'll name the app `customizing-example`. To create it, run the following code in a suitable directory on your system:
+
+```bash
+npx create-react-app customizing-example
+```
+
+This will scaffold a starter React app with the following structure:
+
+```
+src/
+  App.js
+  App.test.js
+  index.css
+  index.js
+  logo.svg
+  reportWebVitals.js
+  setupTests.js
+```
+
+Now, add a `components/` folder:
+
+```
+src/
+  components/
+  App.js
+  App.test.js
+  index.css
+  index.js
+  logo.svg
+  reportWebVitals.js
+  setupTests.js
+```
+
+Inside `components/`, create one component for each section:
+
+```
+src/
+  components/
+    Nav.js
+    Promo.js
+    Intro1.js
+    Intro2.js
+    Intro3.js
+    Footer.js
+```
+
+Simple and clean.
+
+### 🧩 Building Components
+
+Time to write each component.
+
+#### Nav.js
+
+```jsx
+function Nav() {
+  return (
+    <nav className="main-nav">
+      <ul>
+        <li>Home</li>
+        <li>Articles</li>
+        <li>About</li>
+        <li>Contact</li>
+      </ul>
+    </nav>
+  );
+}
+
+export default Nav;
+```
+
+#### Promo.js
+
+```jsx
+function Promo() {
+  return (
+    <div className="promo-section">
+      <div>
+        <h1>Don't miss this deal!</h1>
+      </div>
+      <div>
+        <h2>
+          Subscribe to my newsletter and get all the shop items at 50% off!
+        </h2>
+      </div>
+    </div>
+  );
+}
+
+export default Promo;
+```
+
+#### Intro1.js
+
+```jsx
+function Intro1() {
+  return (
+    <div className="blog-post-intro">
+      <h2>I've become a React developer!</h2>
+      <div>
+        <p>
+          I've completed the React Basics course and I'm happy to announce that
+          I'm now a Junior React Developer!
+        </p>
+        <p className="link">Read more...</p>
+      </div>
+    </div>
+  );
+}
+
+export default Intro1;
+```
+
+#### Intro2.js
+
+```jsx
+function Intro2() {
+  return (
+    <div className="blog-post-intro">
+      <h2>Why I love front-end web development</h2>
+      <div>
+        <p>
+          In this blog post, I'll list 10 reasons why I love to work as a
+          front-end developer.
+        </p>
+        <p className="link">Read more...</p>
+      </div>
+    </div>
+  );
+}
+
+export default Intro2;
+```
+
+#### Intro3.js
+
+```jsx
+function Intro3() {
+  return (
+    <div className="blog-post-intro">
+      <h2>What's the best way to style your React apps?</h2>
+      <div>
+        <p>
+          There are so many options to choose from. Here's a high-level overview
+          of the popular ones.
+        </p>
+        <p className="link">Read more...</p>
+      </div>
+    </div>
+  );
+}
+
+export default Intro3;
+```
+
+#### Footer.js
+
+```jsx
+function Footer() {
+  return (
+    <div className="copyright">
+      <p>Made with love by Myself</p>
+    </div>
+  );
+}
+
+export default Footer;
+```
+
+#### App.js (Main Component)
+
+```jsx
+import Nav from "./components/Nav";
+import Promo from "./components/Promo";
+import Intro1 from "./components/Intro1";
+import Intro2 from "./components/Intro2";
+import Intro3 from "./components/Intro3";
+import Footer from "./components/Footer";
+import "./App.css";
+
+function App() {
+  return (
+    <div className="App">
+      <Nav />
+      <Promo />
+      <main>
+        <Intro1 />
+        <Intro2 />
+        <Intro3 />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+export default App;
+```
+
+### 🔍 JSX Syntax Highlights
+
+Some observations about the code:
+
+#### ✅ className in JSX
+
+React uses `className` instead of `class` because `class` is a reserved word in JavaScript. Even though JSX looks like HTML, it's still JavaScript under the hood.
+
+```jsx
+// ✅ Correct
+<div className="my-class">Content</div>
+
+// ❌ Wrong
+<div class="my-class">Content</div>
+```
+
+#### ✅ Repeated Components (Intro1, Intro2, Intro3)
+
+Why repeat components manually instead of using one reusable component? The DRY (Don't Repeat Yourself) principle matters, but for now, reusability comes later — when you learn about props.
+
+**Better approach with props:**
+
+```jsx
+function BlogPostIntro({ title, content }) {
+  return (
+    <div className="blog-post-intro">
+      <h2>{title}</h2>
+      <div>
+        <p>{content}</p>
+        <p className="link">Read more...</p>
+      </div>
+    </div>
+  );
+}
+
+// Usage
+function App() {
+  return (
+    <div>
+      <BlogPostIntro
+        title="I've become a React developer!"
+        content="I've completed the React Basics course and I'm happy to announce that I'm now a Junior React Developer!"
+      />
+      <BlogPostIntro
+        title="Why I love front-end web development"
+        content="In this blog post, I'll list 10 reasons why I love to work as a front-end developer."
+      />
+    </div>
+  );
+}
+```
+
+#### ✅ Props (not used yet)
+
+You'll start using props in the next lessons. For now, static components are okay.
+
+#### ✅ No `<a>` tags
+
+Links in React apps that point to internal pages should use React Router's `<Link>` component instead of `<a>`. You'll explore that soon too!
+
+```jsx
+// For external links - use <a>
+<a href="https://external-site.com" target="_blank" rel="noopener noreferrer">
+  External Link
+</a>;
+
+// For internal navigation - use React Router's Link
+import { Link } from "react-router-dom";
+
+<Link to="/about">About Page</Link>;
+```
+
+### 💄 Adding Styles
+
+Create a simple CSS file to style your components:
+
+```css
+/* App.css */
+.App {
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.main-nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  gap: 20px;
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.main-nav li {
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.main-nav li:hover {
+  background-color: #e9ecef;
+}
+
+.promo-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 40px;
+  margin: 20px 0;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.promo-section h1 {
+  margin: 0 0 10px 0;
+  font-size: 2.5rem;
+}
+
+.promo-section h2 {
+  margin: 0;
+  font-weight: 300;
+  font-size: 1.2rem;
+}
+
+.blog-post-intro {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post-intro h2 {
+  color: #343a40;
+  margin-top: 0;
+}
+
+.blog-post-intro p {
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+.link {
+  color: #007bff;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.copyright {
+  text-align: center;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-top: 40px;
+}
+
+.copyright p {
+  margin: 0;
+  color: #6c757d;
+}
+```
+
+### 🎯 Project Structure Best Practices
+
+As your project grows, consider this improved structure:
+
+```
+src/
+├── components/
+│   ├── common/
+│   │   ├── Header/
+│   │   ├── Footer/
+│   │   └── Navigation/
+│   ├── layout/
+│   │   ├── BlogPost/
+│   │   └── Promo/
+│   └── pages/
+│       ├── Home/
+│       ├── About/
+│       └── Contact/
+├── hooks/
+├── services/
+├── utils/
+├── styles/
+│   ├── components/
+│   ├── globals.css
+│   └── variables.css
+└── assets/
+    ├── images/
+    └── icons/
+```
+
+### ✅ Conclusion
+
+You've learned how to:
+
+- Structure your React project
+- Create a clean folder hierarchy
+- Build simple components for a blog layout
+- Prepare your app for future scalability and reusability
+- Apply basic styling to components
+- Understand JSX syntax nuances
+
+**Next steps:**
+
+- Learn about props for component reusability
+- Explore React Router for navigation
+- Add interactivity with state and events
+- Implement responsive design patterns
