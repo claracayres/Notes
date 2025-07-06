@@ -1348,21 +1348,670 @@ src/
     ├── images/
     └── icons/
 ```
+## Dissecting Props
 
-### ✅ Conclusion
+Props (short for "properties") are one of the most fundamental concepts in React. They enable components to communicate with each other and make your components reusable and dynamic.
 
-You've learned how to:
+### 🔍 What are Props?
 
-- Structure your React project
-- Create a clean folder hierarchy
-- Build simple components for a blog layout
-- Prepare your app for future scalability and reusability
-- Apply basic styling to components
-- Understand JSX syntax nuances
+Props are **read-only** inputs that allow you to pass data from a parent component to a child component. Think of them as function parameters for React components.
 
-**Next steps:**
+```jsx
+// Parent component passing props
+function App() {
+  return (
+    <div>
+      <Welcome name="Alice" age={25} isStudent={true} />
+      <Welcome name="Bob" age={30} isStudent={false} />
+    </div>
+  );
+}
 
-- Learn about props for component reusability
-- Explore React Router for navigation
-- Add interactivity with state and events
-- Implement responsive design patterns
+// Child component receiving props
+function Welcome(props) {
+  return (
+    <div>
+      <h1>Hello, {props.name}!</h1>
+      <p>Age: {props.age}</p>
+      <p>Status: {props.isStudent ? "Student" : "Professional"}</p>
+    </div>
+  );
+}
+```
+
+### 📦 Types of Props
+
+#### 1. String Props
+
+```jsx
+<Welcome name="John" />
+<Button label="Click me" />
+<Image alt="Profile picture" />
+```
+
+#### 2. Number Props
+
+```jsx
+<Counter initialValue={0} />
+<Progress percentage={75} />
+<Temperature celsius={25} />
+```
+
+#### 3. Boolean Props
+
+```jsx
+<Button disabled={true} />
+<Modal isOpen={false} />
+<Input required={true} />
+
+// Boolean props can be written shorthand
+<Button disabled />        {/* Same as disabled={true} */}
+<Modal isOpen />          {/* Same as isOpen={true} */}
+```
+
+#### 4. Array Props
+
+```jsx
+<TodoList items={['Learn React', 'Build app', 'Deploy']} />
+<Chart data={[1, 2, 3, 4, 5]} />
+<Tags list={['javascript', 'react', 'frontend']} />
+```
+
+#### 5. Object Props
+
+```jsx
+<UserCard user={{ name: 'John', email: 'john@example.com', avatar: 'url' }} />
+<Settings config={{ theme: 'dark', notifications: true }} />
+```
+
+#### 6. Function Props (Event Handlers)
+
+```jsx
+<Button onClick={handleClick} />
+<Form onSubmit={handleSubmit} />
+<Input onChange={handleChange} />
+```
+
+### 🎯 Destructuring Props
+
+Instead of accessing `props.name`, you can destructure props for cleaner code:
+
+```jsx
+// Without destructuring
+function Welcome(props) {
+  return (
+    <div>
+      <h1>Hello, {props.name}!</h1>
+      <p>Age: {props.age}</p>
+    </div>
+  );
+}
+
+// With destructuring (preferred)
+function Welcome({ name, age }) {
+  return (
+    <div>
+      <h1>Hello, {name}!</h1>
+      <p>Age: {age}</p>
+    </div>
+  );
+}
+
+// Destructuring with default values
+function Welcome({ name = "Guest", age = 0 }) {
+  return (
+    <div>
+      <h1>Hello, {name}!</h1>
+      <p>Age: {age}</p>
+    </div>
+  );
+}
+
+// Destructuring with rest operator
+function Button({ label, ...otherProps }) {
+  return <button {...otherProps}>{label}</button>;
+}
+```
+
+### 🔄 Props Flow (Unidirectional Data Flow)
+
+Props flow **down** from parent to child. Data cannot flow upward through props alone.
+
+```jsx
+// ✅ Correct: Parent to Child
+function App() {
+  const userData = { name: "John", role: "Developer" };
+
+  return <UserProfile user={userData} />; // Passing data down
+}
+
+function UserProfile({ user }) {
+  return <UserDetails user={user} />; // Passing data further down
+}
+
+function UserDetails({ user }) {
+  return (
+    <div>
+      <h2>{user.name}</h2>
+      <p>{user.role}</p>
+    </div>
+  );
+}
+
+// ❌ Wrong: Child cannot directly modify parent's data
+function Child({ count }) {
+  // count++; // This won't work!
+  return <div>{count}</div>;
+}
+```
+
+### 📢 Communication from Child to Parent
+
+To send data from child to parent, pass functions as props:
+
+```jsx
+function Parent() {
+  const [message, setMessage] = useState("");
+
+  const handleMessageFromChild = (childMessage) => {
+    setMessage(childMessage);
+  };
+
+  return (
+    <div>
+      <p>Message from child: {message}</p>
+      <Child onSendMessage={handleMessageFromChild} />
+    </div>
+  );
+}
+
+function Child({ onSendMessage }) {
+  const sendMessage = () => {
+    onSendMessage("Hello from child!");
+  };
+
+  return <button onClick={sendMessage}>Send Message</button>;
+}
+```
+
+### 🎨 Practical Examples
+
+#### 1. Reusable Button Component
+
+```jsx
+function Button({
+  children,
+  variant = "primary",
+  size = "medium",
+  disabled = false,
+  onClick,
+}) {
+  const className = `btn btn-${variant} btn-${size} ${
+    disabled ? "disabled" : ""
+  }`;
+
+  return (
+    <button className={className} disabled={disabled} onClick={onClick}>
+      {children}
+    </button>
+  );
+}
+
+// Usage
+function App() {
+  return (
+    <div>
+      <Button
+        variant="primary"
+        size="large"
+        onClick={() => console.log("Primary")}
+      >
+        Primary Button
+      </Button>
+      <Button variant="secondary" onClick={() => console.log("Secondary")}>
+        Secondary Button
+      </Button>
+      <Button disabled>Disabled Button</Button>
+    </div>
+  );
+}
+```
+
+#### 2. Card Component with Multiple Props
+
+```jsx
+function Card({
+  title,
+  subtitle,
+  image,
+  content,
+  footer,
+  onClick,
+  className = "",
+}) {
+  return (
+    <div className={`card ${className}`} onClick={onClick}>
+      {image && <img src={image} alt={title} className="card-image" />}
+
+      <div className="card-body">
+        <h3 className="card-title">{title}</h3>
+        {subtitle && <p className="card-subtitle">{subtitle}</p>}
+        <div className="card-content">{content}</div>
+      </div>
+
+      {footer && <div className="card-footer">{footer}</div>}
+    </div>
+  );
+}
+
+// Usage
+function ProductList() {
+  const products = [
+    {
+      id: 1,
+      title: "Laptop",
+      subtitle: "High Performance",
+      image: "/laptop.jpg",
+      content: "Perfect for development work",
+      price: "$999",
+    },
+    {
+      id: 2,
+      title: "Phone",
+      subtitle: "Latest Model",
+      image: "/phone.jpg",
+      content: "Amazing camera quality",
+      price: "$699",
+    },
+  ];
+
+  return (
+    <div className="product-grid">
+      {products.map((product) => (
+        <Card
+          key={product.id}
+          title={product.title}
+          subtitle={product.subtitle}
+          image={product.image}
+          content={product.content}
+          footer={<span className="price">{product.price}</span>}
+          onClick={() => console.log("Product clicked:", product.title)}
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+#### 3. Form Input Component
+
+```jsx
+function Input({
+  label,
+  type = "text",
+  value,
+  onChange,
+  placeholder,
+  required = false,
+  error,
+  ...rest
+}) {
+  return (
+    <div className="input-group">
+      {label && (
+        <label className="input-label">
+          {label} {required && <span className="required">*</span>}
+        </label>
+      )}
+
+      <input
+        type={type}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={`input ${error ? "input-error" : ""}`}
+        {...rest}
+      />
+
+      {error && <span className="error-message">{error}</span>}
+    </div>
+  );
+}
+
+// Usage
+function ContactForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (field) => (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: e.target.value,
+    }));
+  };
+
+  return (
+    <form>
+      <Input
+        label="Name"
+        value={formData.name}
+        onChange={handleChange("name")}
+        placeholder="Enter your name"
+        required
+        error={errors.name}
+      />
+
+      <Input
+        label="Email"
+        type="email"
+        value={formData.email}
+        onChange={handleChange("email")}
+        placeholder="Enter your email"
+        required
+        error={errors.email}
+      />
+
+      <Input
+        label="Message"
+        value={formData.message}
+        onChange={handleChange("message")}
+        placeholder="Enter your message"
+        as="textarea"
+        rows={4}
+      />
+    </form>
+  );
+}
+```
+
+### 🛡️ Props Validation
+
+Use PropTypes to validate props and catch bugs early:
+
+```jsx
+import PropTypes from "prop-types";
+
+function UserCard({ name, age, email, isActive, hobbies, onEdit }) {
+  return (
+    <div className={`user-card ${isActive ? "active" : "inactive"}`}>
+      <h3>{name}</h3>
+      <p>Age: {age}</p>
+      <p>Email: {email}</p>
+      <ul>
+        {hobbies.map((hobby, index) => (
+          <li key={index}>{hobby}</li>
+        ))}
+      </ul>
+      <button onClick={() => onEdit(name)}>Edit</button>
+    </div>
+  );
+}
+
+// Props validation
+UserCard.propTypes = {
+  name: PropTypes.string.isRequired,
+  age: PropTypes.number.isRequired,
+  email: PropTypes.string.isRequired,
+  isActive: PropTypes.bool,
+  hobbies: PropTypes.arrayOf(PropTypes.string),
+  onEdit: PropTypes.func.isRequired,
+};
+
+// Default props
+UserCard.defaultProps = {
+  isActive: true,
+  hobbies: [],
+};
+```
+
+### 🔧 Advanced Props Patterns
+
+#### 1. Render Props Pattern
+
+```jsx
+function DataFetcher({ url, render }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      });
+  }, [url]);
+
+  return render({ data, loading });
+}
+
+// Usage
+function App() {
+  return (
+    <DataFetcher
+      url="/api/users"
+      render={({ data, loading }) =>
+        loading ? <div>Loading...</div> : <UserList users={data} />
+      }
+    />
+  );
+}
+```
+
+#### 2. Children as Props
+
+```jsx
+function Modal({ isOpen, onClose, children }) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}>
+          ×
+        </button>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+// Usage
+function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <div>
+      <button onClick={() => setIsModalOpen(true)}>Open Modal</button>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <h2>Modal Title</h2>
+        <p>This is the modal content</p>
+        <button>Action Button</button>
+      </Modal>
+    </div>
+  );
+}
+```
+
+#### 3. Props Spreading
+
+```jsx
+function BaseButton({ children, className = "", ...rest }) {
+  return (
+    <button
+      className={`btn ${className}`}
+      {...rest} // Spreads all other props
+    >
+      {children}
+    </button>
+  );
+}
+
+// Usage - all HTML button props are passed through
+<BaseButton
+  onClick={handleClick}
+  disabled={isLoading}
+  type="submit"
+  data-testid="submit-button"
+  className="btn-primary"
+>
+  Submit
+</BaseButton>;
+```
+
+### 🎯 Props Best Practices
+
+#### 1. Keep Props Simple
+
+```jsx
+// ✅ Good: Simple, clear props
+<UserCard name="John" email="john@example.com" />
+
+// ❌ Avoid: Too many props
+<UserCard
+    firstName="John"
+    lastName="Doe"
+    primaryEmail="john@example.com"
+    secondaryEmail="john.doe@company.com"
+    workPhone="123-456-7890"
+    homePhone="098-765-4321"
+    // ... too many props
+/>
+
+// ✅ Better: Group related data
+<UserCard
+    user={{
+        name: 'John Doe',
+        contact: {
+            email: 'john@example.com',
+            phone: '123-456-7890'
+        }
+    }}
+/>
+```
+
+#### 2. Use Descriptive Names
+
+```jsx
+// ❌ Poor naming
+<Button type="1" size="L" active={true} />
+
+// ✅ Clear naming
+<Button variant="primary" size="large" isActive={true} />
+```
+
+#### 3. Provide Default Values
+
+```jsx
+function Alert({ message, type = "info", dismissible = false }) {
+  return (
+    <div className={`alert alert-${type}`}>
+      {message}
+      {dismissible && <button className="alert-close">×</button>}
+    </div>
+  );
+}
+```
+
+### 🚨 Common Props Mistakes
+
+#### 1. Mutating Props
+
+```jsx
+// ❌ Wrong: Never mutate props
+function BadComponent({ items }) {
+  items.push("new item"); // Don't do this!
+  return (
+    <ul>
+      {items.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+  );
+}
+
+// ✅ Correct: Create new array
+function GoodComponent({ items }) {
+  const newItems = [...items, "new item"];
+  return (
+    <ul>
+      {newItems.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+#### 2. Forgetting Key Prop in Lists
+
+```jsx
+// ❌ Wrong: Missing key prop
+function TodoList({ todos }) {
+  return (
+    <ul>
+      {todos.map((todo) => (
+        <li>{todo.text}</li>
+      ))}{" "}
+      {/* Missing key! */}
+    </ul>
+  );
+}
+
+// ✅ Correct: Include unique key
+function TodoList({ todos }) {
+  return (
+    <ul>
+      {todos.map((todo) => (
+        <li key={todo.id}>{todo.text}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+#### 3. Props Drilling
+
+```jsx
+// ❌ Props drilling (passing props through many levels)
+function App() {
+  const user = { name: "John", role: "admin" };
+  return <Dashboard user={user} />;
+}
+
+function Dashboard({ user }) {
+  return <Sidebar user={user} />;
+}
+
+function Sidebar({ user }) {
+  return <UserMenu user={user} />;
+}
+
+function UserMenu({ user }) {
+  return <div>Welcome, {user.name}</div>;
+}
+
+// ✅ Better: Use Context for deeply nested data
+const UserContext = createContext();
+
+function App() {
+  const user = { name: "John", role: "admin" };
+  return (
+    <UserContext.Provider value={user}>
+      <Dashboard />
+    </UserContext.Provider>
+  );
+}
+
+function UserMenu() {
+  const user = useContext(UserContext);
+  return <div>Welcome, {user.name}</div>;
+}
+```
+
+# Event Errors 
