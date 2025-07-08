@@ -1348,6 +1348,7 @@ src/
     ├── images/
     └── icons/
 ```
+
 ## Dissecting Props
 
 Props (short for "properties") are one of the most fundamental concepts in React. They enable components to communicate with each other and make your components reusable and dynamic.
@@ -2014,4 +2015,608 @@ function UserMenu() {
 }
 ```
 
-# Event Errors 
+# Event Handling and Embedded Expressions
+
+Event handling is a crucial part of React development, allowing components to respond to user interactions like clicks, form submissions, and input changes. React provides several ways to handle events, each with its own syntax and use cases.
+
+## Understanding React Events
+
+React uses **SyntheticEvents** - a wrapper around native DOM events that provides consistent behavior across different browsers. These events have the same interface as native events but work consistently across all browsers.
+
+```jsx
+function Button() {
+  const handleClick = (event) => {
+    console.log("Event type:", event.type);
+    console.log("Target element:", event.target);
+    console.log("Current target:", event.currentTarget);
+    event.preventDefault(); // Prevent default behavior
+    event.stopPropagation(); // Stop event bubbling
+  };
+
+  return <button onClick={handleClick}>Click me</button>;
+}
+```
+
+## 4 Ways to Handle Events in React
+
+### 1. Inline Anonymous ES5 Functions
+
+This approach allows you to directly pass an ES5 function declaration as the event handler:
+
+```jsx
+function App() {
+  return (
+    <button
+      onClick={function () {
+        console.log("ES5 inline function");
+      }}
+    >
+      Inline ES5 Function
+    </button>
+  );
+}
+```
+
+**Pros:**
+
+- Simple for very basic operations
+- All logic is visible inline
+
+**Cons:**
+
+- Not commonly used in modern React
+- Poor readability for complex logic
+- Creates a new function on every render (performance impact)
+
+### 2. Inline Anonymous ES6 Functions (Arrow Functions)
+
+This is the most common approach for simple event handlers:
+
+```jsx
+function App() {
+  return (
+    <div>
+      <button onClick={() => console.log("Arrow function clicked")}>
+        Inline Arrow Function
+      </button>
+
+      <button
+        onClick={() => {
+          console.log("Multi-line arrow function");
+          console.log("Can execute multiple statements");
+        }}
+      >
+        Multi-line Arrow Function
+      </button>
+    </div>
+  );
+}
+```
+
+**Pros:**
+
+- Concise syntax
+- Perfect for simple operations
+- Can access component scope easily
+
+**Cons:**
+
+- Creates new function on every render
+- Can become hard to read with complex logic
+
+### 3. Separate Function Declarations
+
+Declare a separate function and reference it in the event handler:
+
+```jsx
+function App() {
+  function handleButtonClick() {
+    console.log("Separate function declaration");
+  }
+
+  function handleComplexOperation() {
+    // Complex logic that spans multiple lines
+    const data = fetchSomeData();
+    processData(data);
+    updateUI();
+    console.log("Complex operation completed");
+  }
+
+  return (
+    <div>
+      <button onClick={handleButtonClick}>Function Declaration</button>
+
+      <button onClick={handleComplexOperation}>Complex Operation</button>
+    </div>
+  );
+}
+```
+
+**Pros:**
+
+- Good for complex logic
+- Function is only created once
+- Easy to test separately
+- Clean JSX
+
+**Cons:**
+
+- Slightly more verbose
+- Function is hoisted (can be called before declaration)
+
+### 4. Separate Function Expressions
+
+Assign a function to a variable and reference it:
+
+```jsx
+function App() {
+  const handleClick = () => {
+    console.log("Function expression");
+  };
+
+  const handleSubmit = (formData) => {
+    console.log("Form submitted with data:", formData);
+  };
+
+  // Multi-line function expression
+  const handleComplexAction = () => {
+    const timestamp = new Date().toISOString();
+    console.log("Action performed at:", timestamp);
+
+    // Additional logic here
+    performValidation();
+    updateState();
+    sendAnalytics();
+  };
+
+  return (
+    <div>
+      <button onClick={handleClick}>Function Expression</button>
+
+      <button onClick={() => handleSubmit({ name: "John", age: 30 })}>
+        Submit Form
+      </button>
+
+      <button onClick={handleComplexAction}>Complex Action</button>
+    </div>
+  );
+}
+```
+
+**Pros:**
+
+- Modern JavaScript syntax
+- Not hoisted (safer)
+- Clean and readable
+- Can be const (immutable)
+
+**Cons:**
+
+- Must be declared before use
+- Slightly more memory usage than declarations
+
+## Practical Examples
+
+### 1. Counter Component
+
+```jsx
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  // Method 1: Inline arrow function
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment (Inline)</button>
+
+      <button onClick={() => setCount(count - 1)}>Decrement (Inline)</button>
+
+      <button onClick={() => setCount(0)}>Reset (Inline)</button>
+    </div>
+  );
+}
+
+// Method 2: Separate function expressions
+function CounterWithSeparateFunctions() {
+  const [count, setCount] = useState(0);
+
+  const increment = () => setCount((prev) => prev + 1);
+  const decrement = () => setCount((prev) => prev - 1);
+  const reset = () => setCount(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+}
+```
+
+### 2. Form Handling
+
+```jsx
+function LoginForm() {
+  const [formData, setFormData] = useState({ username: "", password: "" });
+
+  // Inline event handler for input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Separate function for form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+
+    // Validation logic
+    if (!formData.username || !formData.password) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    // API call logic
+    submitLogin(formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="username"
+        value={formData.username}
+        onChange={handleInputChange}
+        placeholder="Username"
+      />
+
+      <input
+        type="password"
+        name="password"
+        value={formData.password}
+        onChange={handleInputChange}
+        placeholder="Password"
+      />
+
+      <button type="submit">Login</button>
+
+      {/* Inline handler for reset */}
+      <button
+        type="button"
+        onClick={() => setFormData({ username: "", password: "" })}
+      >
+        Reset Form
+      </button>
+    </form>
+  );
+}
+```
+
+### 3. Event Delegation and Parameters
+
+```jsx
+function TodoList() {
+  const [todos, setTodos] = useState([
+    { id: 1, text: "Learn React", completed: false },
+    { id: 2, text: "Build an app", completed: false },
+  ]);
+
+  // Method 1: Inline arrow function with parameters
+  const toggleTodoInline = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
+
+  // Method 2: Separate function with parameters
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  // Method 3: Event delegation approach
+  const handleTodoAction = (e) => {
+    const { action, id } = e.target.dataset;
+    const todoId = parseInt(id);
+
+    switch (action) {
+      case "toggle":
+        toggleTodoInline(todoId);
+        break;
+      case "delete":
+        deleteTodo(todoId);
+        break;
+      default:
+        break;
+    }
+  };
+
+  return (
+    <div>
+      <h3>Todo List</h3>
+      {todos.map((todo) => (
+        <div key={todo.id} className="todo-item">
+          <span
+            style={{
+              textDecoration: todo.completed ? "line-through" : "none",
+            }}
+          >
+            {todo.text}
+          </span>
+
+          {/* Method 1: Inline arrow function */}
+          <button onClick={() => toggleTodoInline(todo.id)}>
+            {todo.completed ? "Undo" : "Complete"}
+          </button>
+
+          {/* Method 2: Separate function */}
+          <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+
+          {/* Method 3: Event delegation */}
+          <button
+            data-action="toggle"
+            data-id={todo.id}
+            onClick={handleTodoAction}
+          >
+            Toggle
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## Common Event Types
+
+### Mouse Events
+
+```jsx
+function MouseEvents() {
+  return (
+    <div>
+      <button onClick={() => console.log("Clicked")}>Click Me</button>
+
+      <button onDoubleClick={() => console.log("Double clicked")}>
+        Double Click
+      </button>
+
+      <div
+        onMouseEnter={() => console.log("Mouse entered")}
+        onMouseLeave={() => console.log("Mouse left")}
+        onMouseMove={() => console.log("Mouse moving")}
+        style={{ padding: "20px", border: "1px solid #ccc" }}
+      >
+        Hover over me
+      </div>
+    </div>
+  );
+}
+```
+
+### Keyboard Events
+
+```jsx
+function KeyboardEvents() {
+  const handleKeyDown = (e) => {
+    console.log("Key pressed:", e.key);
+
+    if (e.key === "Enter") {
+      console.log("Enter key pressed");
+    }
+
+    if (e.key === "Escape") {
+      console.log("Escape key pressed");
+    }
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        onKeyDown={handleKeyDown}
+        onKeyUp={(e) => console.log("Key released:", e.key)}
+        placeholder="Type something..."
+      />
+    </div>
+  );
+}
+```
+
+### Form Events
+
+```jsx
+function FormEvents() {
+  const [value, setValue] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted with value:", value);
+  };
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+
+  const handleFocus = () => {
+    console.log("Input focused");
+  };
+
+  const handleBlur = () => {
+    console.log("Input blurred");
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={value}
+        onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        placeholder="Enter text..."
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## Best Practices for Event Handling
+
+### 1. ✅ Use Appropriate Method for the Situation
+
+```jsx
+function EventHandlingBestPractices() {
+  const [count, setCount] = useState(0);
+
+  // ✅ Good: Simple operations inline
+  const simpleIncrement = () => setCount((prev) => prev + 1);
+
+  // ✅ Good: Complex operations in separate functions
+  const complexOperation = () => {
+    // Multiple lines of logic
+    const timestamp = Date.now();
+    const newCount = count + 1;
+
+    // Log for analytics
+    console.log("Count incremented at:", timestamp);
+
+    // Update state
+    setCount(newCount);
+
+    // Additional side effects
+    if (newCount === 10) {
+      alert("You reached 10!");
+    }
+  };
+
+  return (
+    <div>
+      {/* Simple operation - inline is fine */}
+      <button onClick={() => setCount(count + 1)}>Simple Increment</button>
+
+      {/* Complex operation - separate function is better */}
+      <button onClick={complexOperation}>Complex Operation</button>
+    </div>
+  );
+}
+```
+
+### 2. ✅ Prevent Performance Issues
+
+```jsx
+// ❌ Bad: Creates new function on every render
+function BadPerformance({ items }) {
+  return (
+    <div>
+      {items.map((item) => (
+        <button key={item.id} onClick={() => console.log(item.id)}>
+          {item.name}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// ✅ Good: Use useCallback for expensive operations
+function GoodPerformance({ items }) {
+  const handleItemClick = useCallback((id) => {
+    console.log("Item clicked:", id);
+  }, []);
+
+  return (
+    <div>
+      {items.map((item) => (
+        <button key={item.id} onClick={() => handleItemClick(item.id)}>
+          {item.name}
+        </button>
+      ))}
+    </div>
+  );
+}
+```
+
+### 3. ✅ Handle Edge Cases
+
+```jsx
+function RobustEventHandling() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleAsyncOperation = async () => {
+    // Prevent multiple clicks
+    if (isLoading) return;
+
+    try {
+      setIsLoading(true);
+      await someAsyncOperation();
+    } catch (error) {
+      console.error("Operation failed:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    // Validate form data
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    if (!data.email || !data.password) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
+    // Submit form
+    submitForm(data);
+  };
+
+  return (
+    <div>
+      <button onClick={handleAsyncOperation} disabled={isLoading}>
+        {isLoading ? "Processing..." : "Start Operation"}
+      </button>
+
+      <form onSubmit={handleFormSubmit}>
+        <input type="email" name="email" required />
+        <input type="password" name="password" required />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
+}
+```
+
+## Summary
+
+Event handling in React offers multiple approaches:
+
+1. **Inline ES5 functions** - Rarely used, legacy approach
+2. **Inline arrow functions** - Most common for simple operations
+3. **Separate function declarations** - Good for complex logic, hoisted
+4. **Separate function expressions** - Modern approach, not hoisted, preferred
+
+### When to Use Each:
+
+- **Inline arrow functions**: Simple operations, single statements
+- **Separate functions**: Complex logic, reusable operations, better performance
+- **Function expressions**: Modern codebase, when you want to avoid hoisting
+- **Function declarations**: When you need hoisting or traditional function syntax
+
+Choose the approach that best fits your use case, considering factors like:
+
+- Complexity of the logic
+- Performance requirements
+- Code readability
+- Team coding standards
+- Reusability needs
+
+Understanding all these approaches will help you read other developers' code and choose the most appropriate method for your specific situation.
