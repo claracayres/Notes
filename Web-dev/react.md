@@ -1349,1274 +1349,385 @@ src/
     └── icons/
 ```
 
-## Dissecting Props
+# Data flow in React
 
-Props (short for "properties") are one of the most fundamental concepts in React. They enable components to communicate with each other and make your components reusable and dynamic.
+## 📝 Class Notes - Data Flow in React
 
-### 🔍 What are Props?
+### Main Concept
 
-Props are **read-only** inputs that allow you to pass data from a parent component to a child component. Think of them as function parameters for React components.
+- **Unidirectional flow**: Data in React always flows from parent to child
+- It's like a "one-way street" - data can only go in one direction
+- Starts at the root component and can flow through multiple levels of nesting
+
+### Why Unidirectional Flow?
+
+**Main benefits:**
+
+1. **Faster comprehension** - Easier to understand application logic
+2. **Simplified flow** - Data doesn't "fly around" everywhere
+
+### How It Works in Practice
+
+#### Parent-Child Data Flow
 
 ```jsx
-// Parent component passing props
-function App() {
+// Parent Component
+function Dog() {
+  return <Puppy name="Max" bowlShape="square" bowlStatus="full" />;
+}
+
+// Child Component
+function Puppy(props) {
   return (
     <div>
-      <Welcome name="Alice" age={25} isStudent={true} />
-      <Welcome name="Bob" age={30} isStudent={false} />
+      {props.name} has{" "}
+      <Bowl bowlShape={props.bowlShape} bowlStatus={props.bowlStatus} />
     </div>
   );
 }
 
-// Child component receiving props
-function Welcome(props) {
+// Grandchild Component
+function Bowl(props) {
   return (
-    <div>
-      <h1>Hello, {props.name}!</h1>
-      <p>Age: {props.age}</p>
-      <p>Status: {props.isStudent ? "Student" : "Professional"}</p>
-    </div>
+    <span>
+      {props.bowlShape}-shaped bowl, and it's currently {props.bowlStatus}
+    </span>
   );
 }
 ```
 
-### 📦 Types of Props
+### Component Tree Structure
 
-#### 1. String Props
-
-```jsx
-<Welcome name="John" />
-<Button label="Click me" />
-<Image alt="Profile picture" />
+```
+App (Root Component)
+├── Header
+│   ├── Navigation
+│   └── Logo
+├── Main
+│   ├── Sidebar
+│   │   ├── UserProfile
+│   │   └── Menu
+│   └── Content
+│       ├── Post
+│       └── Comments
+└── Footer
 ```
 
-#### 2. Number Props
+**Data flow paths:**
+
+- Root → Header → Navigation
+- Root → Main → Sidebar → UserProfile
+- Root → Main → Content → Post
+
+### Important Props Characteristics
+
+#### ✅ Props are Immutable
 
 ```jsx
-<Counter initialValue={0} />
-<Progress percentage={75} />
-<Temperature celsius={25} />
-```
-
-#### 3. Boolean Props
-
-```jsx
-<Button disabled={true} />
-<Modal isOpen={false} />
-<Input required={true} />
-
-// Boolean props can be written shorthand
-<Button disabled />        {/* Same as disabled={true} */}
-<Modal isOpen />          {/* Same as isOpen={true} */}
-```
-
-#### 4. Array Props
-
-```jsx
-<TodoList items={['Learn React', 'Build app', 'Deploy']} />
-<Chart data={[1, 2, 3, 4, 5]} />
-<Tags list={['javascript', 'react', 'frontend']} />
-```
-
-#### 5. Object Props
-
-```jsx
-<UserCard user={{ name: 'John', email: 'john@example.com', avatar: 'url' }} />
-<Settings config={{ theme: 'dark', notifications: true }} />
-```
-
-#### 6. Function Props (Event Handlers)
-
-```jsx
-<Button onClick={handleClick} />
-<Form onSubmit={handleSubmit} />
-<Input onChange={handleChange} />
-```
-
-### 🎯 Destructuring Props
-
-Instead of accessing `props.name`, you can destructure props for cleaner code:
-
-```jsx
-// Without destructuring
-function Welcome(props) {
-  return (
-    <div>
-      <h1>Hello, {props.name}!</h1>
-      <p>Age: {props.age}</p>
-    </div>
-  );
+// ❌ WRONG - We cannot modify props
+function ChildComponent({ name }) {
+  name = "New Name"; // This doesn't work!
+  return <h1>{name}</h1>;
 }
 
-// With destructuring (preferred)
-function Welcome({ name, age }) {
-  return (
-    <div>
-      <h1>Hello, {name}!</h1>
-      <p>Age: {age}</p>
-    </div>
-  );
-}
-
-// Destructuring with default values
-function Welcome({ name = "Guest", age = 0 }) {
-  return (
-    <div>
-      <h1>Hello, {name}!</h1>
-      <p>Age: {age}</p>
-    </div>
-  );
-}
-
-// Destructuring with rest operator
-function Button({ label, ...otherProps }) {
-  return <button {...otherProps}>{label}</button>;
+// ✅ CORRECT - Props are read-only
+function ChildComponent({ name }) {
+  return <h1>{name}</h1>; // Just use the value
 }
 ```
 
-### 🔄 Props Flow (Unidirectional Data Flow)
-
-Props flow **down** from parent to child. Data cannot flow upward through props alone.
+### Detailed Example - Blog System
 
 ```jsx
-// ✅ Correct: Parent to Child
-function App() {
-  const userData = { name: "John", role: "Developer" };
-
-  return <UserProfile user={userData} />; // Passing data down
-}
-
-function UserProfile({ user }) {
-  return <UserDetails user={user} />; // Passing data further down
-}
-
-function UserDetails({ user }) {
-  return (
-    <div>
-      <h2>{user.name}</h2>
-      <p>{user.role}</p>
-    </div>
-  );
-}
-
-// ❌ Wrong: Child cannot directly modify parent's data
-function Child({ count }) {
-  // count++; // This won't work!
-  return <div>{count}</div>;
-}
-```
-
-### 📢 Communication from Child to Parent
-
-To send data from child to parent, pass functions as props:
-
-```jsx
-function Parent() {
-  const [message, setMessage] = useState("");
-
-  const handleMessageFromChild = (childMessage) => {
-    setMessage(childMessage);
+// Root Component
+function BlogApp() {
+  const blogData = {
+    title: "My React Blog",
+    author: "John Silva",
+    posts: [
+      { id: 1, title: "Learning React", content: "React is amazing!" },
+      { id: 2, title: "Props in React", content: "Props make life easier!" },
+    ],
   };
 
   return (
     <div>
-      <p>Message from child: {message}</p>
-      <Child onSendMessage={handleMessageFromChild} />
+      <BlogHeader title={blogData.title} author={blogData.author} />
+      <BlogContent posts={blogData.posts} />
     </div>
   );
 }
 
-function Child({ onSendMessage }) {
-  const sendMessage = () => {
-    onSendMessage("Hello from child!");
-  };
-
-  return <button onClick={sendMessage}>Send Message</button>;
-}
-```
-
-### 🎨 Practical Examples
-
-#### 1. Reusable Button Component
-
-```jsx
-function Button({
-  children,
-  variant = "primary",
-  size = "medium",
-  disabled = false,
-  onClick,
-}) {
-  const className = `btn btn-${variant} btn-${size} ${
-    disabled ? "disabled" : ""
-  }`;
-
+// Second level components
+function BlogHeader({ title, author }) {
   return (
-    <button className={className} disabled={disabled} onClick={onClick}>
-      {children}
-    </button>
+    <header>
+      <BlogTitle title={title} />
+      <AuthorInfo author={author} />
+    </header>
   );
 }
 
-// Usage
-function App() {
+function BlogContent({ posts }) {
   return (
-    <div>
-      <Button
-        variant="primary"
-        size="large"
-        onClick={() => console.log("Primary")}
-      >
-        Primary Button
-      </Button>
-      <Button variant="secondary" onClick={() => console.log("Secondary")}>
-        Secondary Button
-      </Button>
-      <Button disabled>Disabled Button</Button>
-    </div>
-  );
-}
-```
-
-#### 2. Card Component with Multiple Props
-
-```jsx
-function Card({
-  title,
-  subtitle,
-  image,
-  content,
-  footer,
-  onClick,
-  className = "",
-}) {
-  return (
-    <div className={`card ${className}`} onClick={onClick}>
-      {image && <img src={image} alt={title} className="card-image" />}
-
-      <div className="card-body">
-        <h3 className="card-title">{title}</h3>
-        {subtitle && <p className="card-subtitle">{subtitle}</p>}
-        <div className="card-content">{content}</div>
-      </div>
-
-      {footer && <div className="card-footer">{footer}</div>}
-    </div>
-  );
-}
-
-// Usage
-function ProductList() {
-  const products = [
-    {
-      id: 1,
-      title: "Laptop",
-      subtitle: "High Performance",
-      image: "/laptop.jpg",
-      content: "Perfect for development work",
-      price: "$999",
-    },
-    {
-      id: 2,
-      title: "Phone",
-      subtitle: "Latest Model",
-      image: "/phone.jpg",
-      content: "Amazing camera quality",
-      price: "$699",
-    },
-  ];
-
-  return (
-    <div className="product-grid">
-      {products.map((product) => (
-        <Card
-          key={product.id}
-          title={product.title}
-          subtitle={product.subtitle}
-          image={product.image}
-          content={product.content}
-          footer={<span className="price">{product.price}</span>}
-          onClick={() => console.log("Product clicked:", product.title)}
-        />
+    <main>
+      {posts.map((post) => (
+        <BlogPost key={post.id} post={post} />
       ))}
-    </div>
+    </main>
   );
+}
+
+// Third level components
+function BlogTitle({ title }) {
+  return <h1>{title}</h1>;
+}
+
+function AuthorInfo({ author }) {
+  return <p>By: {author}</p>;
+}
+
+function BlogPost({ post }) {
+  return (
+    <article>
+      <PostTitle title={post.title} />
+      <PostContent content={post.content} />
+    </article>
+  );
+}
+
+// Fourth level components
+function PostTitle({ title }) {
+  return <h2>{title}</h2>;
+}
+
+function PostContent({ content }) {
+  return <p>{content}</p>;
 }
 ```
 
-#### 3. Form Input Component
+### Visualizing Data Flow
+
+```
+BlogApp (blogData)
+    ↓
+┌─────────────────────────────────────┐
+│ BlogHeader                          │
+│ ← title, author                     │
+│   ↓                                 │
+│   BlogTitle ← title                 │
+│   AuthorInfo ← author               │
+└─────────────────────────────────────┘
+    ↓
+┌─────────────────────────────────────┐
+│ BlogContent                         │
+│ ← posts[]                           │
+│   ↓                                 │
+│   BlogPost ← post                   │
+│     ↓                               │
+│     PostTitle ← title               │
+│     PostContent ← content           │
+└─────────────────────────────────────┘
+```
+
+### Example with State - Counter
 
 ```jsx
-function Input({
-  label,
-  type = "text",
-  value,
-  onChange,
-  placeholder,
-  required = false,
-  error,
-  ...rest
-}) {
-  return (
-    <div className="input-group">
-      {label && (
-        <label className="input-label">
-          {label} {required && <span className="required">*</span>}
-        </label>
-      )}
+function CounterApp() {
+  const [count, setCount] = useState(0);
+  const [theme, setTheme] = useState("light");
 
-      <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className={`input ${error ? "input-error" : ""}`}
-        {...rest}
+  return (
+    <div className={`app ${theme}`}>
+      <ThemeToggle currentTheme={theme} onThemeChange={setTheme} />
+      <CounterDisplay
+        count={count}
+        onIncrement={() => setCount(count + 1)}
+        onDecrement={() => setCount(count - 1)}
+        onReset={() => setCount(0)}
       />
-
-      {error && <span className="error-message">{error}</span>}
     </div>
   );
 }
 
-// Usage
-function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [errors, setErrors] = useState({});
-
-  const handleChange = (field) => (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: e.target.value,
-    }));
-  };
-
-  return (
-    <form>
-      <Input
-        label="Name"
-        value={formData.name}
-        onChange={handleChange("name")}
-        placeholder="Enter your name"
-        required
-        error={errors.name}
-      />
-
-      <Input
-        label="Email"
-        type="email"
-        value={formData.email}
-        onChange={handleChange("email")}
-        placeholder="Enter your email"
-        required
-        error={errors.email}
-      />
-
-      <Input
-        label="Message"
-        value={formData.message}
-        onChange={handleChange("message")}
-        placeholder="Enter your message"
-        as="textarea"
-        rows={4}
-      />
-    </form>
-  );
-}
-```
-
-### 🛡️ Props Validation
-
-Use PropTypes to validate props and catch bugs early:
-
-```jsx
-import PropTypes from "prop-types";
-
-function UserCard({ name, age, email, isActive, hobbies, onEdit }) {
-  return (
-    <div className={`user-card ${isActive ? "active" : "inactive"}`}>
-      <h3>{name}</h3>
-      <p>Age: {age}</p>
-      <p>Email: {email}</p>
-      <ul>
-        {hobbies.map((hobby, index) => (
-          <li key={index}>{hobby}</li>
-        ))}
-      </ul>
-      <button onClick={() => onEdit(name)}>Edit</button>
-    </div>
-  );
-}
-
-// Props validation
-UserCard.propTypes = {
-  name: PropTypes.string.isRequired,
-  age: PropTypes.number.isRequired,
-  email: PropTypes.string.isRequired,
-  isActive: PropTypes.bool,
-  hobbies: PropTypes.arrayOf(PropTypes.string),
-  onEdit: PropTypes.func.isRequired,
-};
-
-// Default props
-UserCard.defaultProps = {
-  isActive: true,
-  hobbies: [],
-};
-```
-
-### 🔧 Advanced Props Patterns
-
-#### 1. Render Props Pattern
-
-```jsx
-function DataFetcher({ url, render }) {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      });
-  }, [url]);
-
-  return render({ data, loading });
-}
-
-// Usage
-function App() {
-  return (
-    <DataFetcher
-      url="/api/users"
-      render={({ data, loading }) =>
-        loading ? <div>Loading...</div> : <UserList users={data} />
-      }
-    />
-  );
-}
-```
-
-#### 2. Children as Props
-
-```jsx
-function Modal({ isOpen, onClose, children }) {
-  if (!isOpen) return null;
-
-  return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>
-          ×
-        </button>
-        {children}
-      </div>
-    </div>
-  );
-}
-
-// Usage
-function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  return (
-    <div>
-      <button onClick={() => setIsModalOpen(true)}>Open Modal</button>
-
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <h2>Modal Title</h2>
-        <p>This is the modal content</p>
-        <button>Action Button</button>
-      </Modal>
-    </div>
-  );
-}
-```
-
-#### 3. Props Spreading
-
-```jsx
-function BaseButton({ children, className = "", ...rest }) {
+function ThemeToggle({ currentTheme, onThemeChange }) {
   return (
     <button
-      className={`btn ${className}`}
-      {...rest} // Spreads all other props
+      onClick={() => onThemeChange(currentTheme === "light" ? "dark" : "light")}
     >
-      {children}
+      Switch to {currentTheme === "light" ? "dark" : "light"} theme
     </button>
   );
 }
 
-// Usage - all HTML button props are passed through
-<BaseButton
-  onClick={handleClick}
-  disabled={isLoading}
-  type="submit"
-  data-testid="submit-button"
-  className="btn-primary"
->
-  Submit
-</BaseButton>;
-```
-
-### 🎯 Props Best Practices
-
-#### 1. Keep Props Simple
-
-```jsx
-// ✅ Good: Simple, clear props
-<UserCard name="John" email="john@example.com" />
-
-// ❌ Avoid: Too many props
-<UserCard
-    firstName="John"
-    lastName="Doe"
-    primaryEmail="john@example.com"
-    secondaryEmail="john.doe@company.com"
-    workPhone="123-456-7890"
-    homePhone="098-765-4321"
-    // ... too many props
-/>
-
-// ✅ Better: Group related data
-<UserCard
-    user={{
-        name: 'John Doe',
-        contact: {
-            email: 'john@example.com',
-            phone: '123-456-7890'
-        }
-    }}
-/>
-```
-
-#### 2. Use Descriptive Names
-
-```jsx
-// ❌ Poor naming
-<Button type="1" size="L" active={true} />
-
-// ✅ Clear naming
-<Button variant="primary" size="large" isActive={true} />
-```
-
-#### 3. Provide Default Values
-
-```jsx
-function Alert({ message, type = "info", dismissible = false }) {
+function CounterDisplay({ count, onIncrement, onDecrement, onReset }) {
   return (
-    <div className={`alert alert-${type}`}>
-      {message}
-      {dismissible && <button className="alert-close">×</button>}
+    <div>
+      <CountValue value={count} />
+      <CounterControls
+        onIncrement={onIncrement}
+        onDecrement={onDecrement}
+        onReset={onReset}
+      />
+    </div>
+  );
+}
+
+function CountValue({ value }) {
+  return <h2>Counter: {value}</h2>;
+}
+
+function CounterControls({ onIncrement, onDecrement, onReset }) {
+  return (
+    <div>
+      <button onClick={onIncrement}>+1</button>
+      <button onClick={onDecrement}>-1</button>
+      <button onClick={onReset}>Reset</button>
     </div>
   );
 }
 ```
 
-### 🚨 Common Props Mistakes
-
-#### 1. Mutating Props
+### Passing Complex Data
 
 ```jsx
-// ❌ Wrong: Never mutate props
-function BadComponent({ items }) {
-  items.push("new item"); // Don't do this!
+function ShoppingApp() {
+  const userData = {
+    name: "Maria",
+    email: "maria@email.com",
+    preferences: {
+      currency: "USD",
+      language: "en-US",
+    },
+  };
+
+  const cartData = {
+    items: [
+      { id: 1, name: "Laptop", price: 999, quantity: 1 },
+      { id: 2, name: "Mouse", price: 25, quantity: 2 },
+    ],
+    total: 1049,
+  };
+
+  return (
+    <div>
+      <UserPanel user={userData} />
+      <ShoppingCart cart={cartData} userPreferences={userData.preferences} />
+    </div>
+  );
+}
+
+function UserPanel({ user }) {
+  return (
+    <div>
+      <UserGreeting name={user.name} />
+      <UserSettings preferences={user.preferences} />
+    </div>
+  );
+}
+
+function ShoppingCart({ cart, userPreferences }) {
+  return (
+    <div>
+      <CartItems items={cart.items} />
+      <CartTotal total={cart.total} currency={userPreferences.currency} />
+    </div>
+  );
+}
+
+function UserGreeting({ name }) {
+  return <h1>Hello, {name}!</h1>;
+}
+
+function UserSettings({ preferences }) {
+  return (
+    <div>
+      <p>Language: {preferences.language}</p>
+      <p>Currency: {preferences.currency}</p>
+    </div>
+  );
+}
+
+function CartItems({ items }) {
   return (
     <ul>
       {items.map((item) => (
-        <li key={item}>{item}</li>
+        <CartItem key={item.id} item={item} />
       ))}
     </ul>
   );
 }
 
-// ✅ Correct: Create new array
-function GoodComponent({ items }) {
-  const newItems = [...items, "new item"];
+function CartItem({ item }) {
   return (
-    <ul>
-      {newItems.map((item) => (
-        <li key={item}>{item}</li>
-      ))}
-    </ul>
+    <li>
+      {item.name} - Qty: {item.quantity} - Price: ${item.price}
+    </li>
+  );
+}
+
+function CartTotal({ total, currency }) {
+  return (
+    <h3>
+      Total: {currency === "USD" ? "$" : "€"} {total}
+    </h3>
   );
 }
 ```
 
-#### 2. Forgetting Key Prop in Lists
+### ⚠️ Problems with Bidirectional Flow (Why to avoid)
+
+If data could flow in any direction:
 
 ```jsx
-// ❌ Wrong: Missing key prop
-function TodoList({ todos }) {
-  return (
-    <ul>
-      {todos.map((todo) => (
-        <li>{todo.text}</li>
-      ))}{" "}
-      {/* Missing key! */}
-    </ul>
-  );
-}
-
-// ✅ Correct: Include unique key
-function TodoList({ todos }) {
-  return (
-    <ul>
-      {todos.map((todo) => (
-        <li key={todo.id}>{todo.text}</li>
-      ))}
-    </ul>
-  );
+// ❌ Example of what NOT to do (chaotic flow)
+function ChaoticComponent() {
+  // Data coming from multiple different directions
+  // Child modifying parent data
+  // Sibling components communicating directly
+  // State being modified from anywhere
+  // VERY CONFUSING! 🤯
 }
 ```
 
-#### 3. Props Drilling
+**Problems:**
+
+- 🤯 **Hard to understand**: Logic becomes confusing
+- 🐛 **Hard to track bugs**: Data can come from anywhere
+- 🐌 **Poor performance**: Optimizations become complex
+- 🔧 **Hard to maintain**: Changes affect many places
+
+### ✅ Advantages of Unidirectional Flow
+
+1. **Predictability**: We always know where data comes from
+2. **Easier debugging**: We can trace the data path
+3. **Performance**: React can optimize better
+4. **Cleaner code**: Logic is more organized
+5. **Reusability**: Components become more modular
+
+### Class Notes Summary
+
+```
+📋 IMPORTANT POINTS:
+
+✓ Data always flows parent → child
+✓ Props are immutable (read-only)
+✓ Use component tree for organization
+✓ Unidirectional flow = easier to understand code
+✓ Avoid modifying props inside components
+✓ Use functions (callbacks) for child → parent communication
+
+🎯 REMINDER: "One-way street" - data only goes one direction!
+```
+
+### Mental Exercise
+
+**Question**: How can a grandchild component "notify" the grandparent component about a change?
+
+**Answer**: Through callback functions passed as props:
 
 ```jsx
-// ❌ Props drilling (passing props through many levels)
-function App() {
-  const user = { name: "John", role: "admin" };
-  return <Dashboard user={user} />;
-}
-
-function Dashboard({ user }) {
-  return <Sidebar user={user} />;
-}
-
-function Sidebar({ user }) {
-  return <UserMenu user={user} />;
-}
-
-function UserMenu({ user }) {
-  return <div>Welcome, {user.name}</div>;
-}
-
-// ✅ Better: Use Context for deeply nested data
-const UserContext = createContext();
-
-function App() {
-  const user = { name: "John", role: "admin" };
-  return (
-    <UserContext.Provider value={user}>
-      <Dashboard />
-    </UserContext.Provider>
-  );
-}
-
-function UserMenu() {
-  const user = useContext(UserContext);
-  return <div>Welcome, {user.name}</div>;
-}
+Grandparent → Parent (callback function) → Grandchild (executes callback)
 ```
 
-# Event Handling and Embedded Expressions
-
-Event handling is a crucial part of React development, allowing components to respond to user interactions like clicks, form submissions, and input changes. React provides several ways to handle events, each with its own syntax and use cases.
-
-## Understanding React Events
-
-React uses **SyntheticEvents** - a wrapper around native DOM events that provides consistent behavior across different browsers. These events have the same interface as native events but work consistently across all browsers.
-
-```jsx
-function Button() {
-  const handleClick = (event) => {
-    console.log("Event type:", event.type);
-    console.log("Target element:", event.target);
-    console.log("Current target:", event.currentTarget);
-    event.preventDefault(); // Prevent default behavior
-    event.stopPropagation(); // Stop event bubbling
-  };
-
-  return <button onClick={handleClick}>Click me</button>;
-}
-```
-
-## 4 Ways to Handle Events in React
-
-### 1. Inline Anonymous ES5 Functions
-
-This approach allows you to directly pass an ES5 function declaration as the event handler:
-
-```jsx
-function App() {
-  return (
-    <button
-      onClick={function () {
-        console.log("ES5 inline function");
-      }}
-    >
-      Inline ES5 Function
-    </button>
-  );
-}
-```
-
-**Pros:**
-
-- Simple for very basic operations
-- All logic is visible inline
-
-**Cons:**
-
-- Not commonly used in modern React
-- Poor readability for complex logic
-- Creates a new function on every render (performance impact)
-
-### 2. Inline Anonymous ES6 Functions (Arrow Functions)
-
-This is the most common approach for simple event handlers:
-
-```jsx
-function App() {
-  return (
-    <div>
-      <button onClick={() => console.log("Arrow function clicked")}>
-        Inline Arrow Function
-      </button>
-
-      <button
-        onClick={() => {
-          console.log("Multi-line arrow function");
-          console.log("Can execute multiple statements");
-        }}
-      >
-        Multi-line Arrow Function
-      </button>
-    </div>
-  );
-}
-```
-
-**Pros:**
-
-- Concise syntax
-- Perfect for simple operations
-- Can access component scope easily
-
-**Cons:**
-
-- Creates new function on every render
-- Can become hard to read with complex logic
-
-### 3. Separate Function Declarations
-
-Declare a separate function and reference it in the event handler:
-
-```jsx
-function App() {
-  function handleButtonClick() {
-    console.log("Separate function declaration");
-  }
-
-  function handleComplexOperation() {
-    // Complex logic that spans multiple lines
-    const data = fetchSomeData();
-    processData(data);
-    updateUI();
-    console.log("Complex operation completed");
-  }
-
-  return (
-    <div>
-      <button onClick={handleButtonClick}>Function Declaration</button>
-
-      <button onClick={handleComplexOperation}>Complex Operation</button>
-    </div>
-  );
-}
-```
-
-**Pros:**
-
-- Good for complex logic
-- Function is only created once
-- Easy to test separately
-- Clean JSX
-
-**Cons:**
-
-- Slightly more verbose
-- Function is hoisted (can be called before declaration)
-
-### 4. Separate Function Expressions
-
-Assign a function to a variable and reference it:
-
-```jsx
-function App() {
-  const handleClick = () => {
-    console.log("Function expression");
-  };
-
-  const handleSubmit = (formData) => {
-    console.log("Form submitted with data:", formData);
-  };
-
-  // Multi-line function expression
-  const handleComplexAction = () => {
-    const timestamp = new Date().toISOString();
-    console.log("Action performed at:", timestamp);
-
-    // Additional logic here
-    performValidation();
-    updateState();
-    sendAnalytics();
-  };
-
-  return (
-    <div>
-      <button onClick={handleClick}>Function Expression</button>
-
-      <button onClick={() => handleSubmit({ name: "John", age: 30 })}>
-        Submit Form
-      </button>
-
-      <button onClick={handleComplexAction}>Complex Action</button>
-    </div>
-  );
-}
-```
-
-**Pros:**
-
-- Modern JavaScript syntax
-- Not hoisted (safer)
-- Clean and readable
-- Can be const (immutable)
-
-**Cons:**
-
-- Must be declared before use
-- Slightly more memory usage than declarations
-
-## Practical Examples
-
-### 1. Counter Component
-
-```jsx
-function Counter() {
-  const [count, setCount] = useState(0);
-
-  // Method 1: Inline arrow function
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={() => setCount(count + 1)}>Increment (Inline)</button>
-
-      <button onClick={() => setCount(count - 1)}>Decrement (Inline)</button>
-
-      <button onClick={() => setCount(0)}>Reset (Inline)</button>
-    </div>
-  );
-}
-
-// Method 2: Separate function expressions
-function CounterWithSeparateFunctions() {
-  const [count, setCount] = useState(0);
-
-  const increment = () => setCount((prev) => prev + 1);
-  const decrement = () => setCount((prev) => prev - 1);
-  const reset = () => setCount(0);
-
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={increment}>Increment</button>
-      <button onClick={decrement}>Decrement</button>
-      <button onClick={reset}>Reset</button>
-    </div>
-  );
-}
-```
-
-### 2. Form Handling
-
-```jsx
-function LoginForm() {
-  const [formData, setFormData] = useState({ username: "", password: "" });
-
-  // Inline event handler for input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  // Separate function for form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-
-    // Validation logic
-    if (!formData.username || !formData.password) {
-      alert("Please fill in all fields");
-      return;
-    }
-
-    // API call logic
-    submitLogin(formData);
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="username"
-        value={formData.username}
-        onChange={handleInputChange}
-        placeholder="Username"
-      />
-
-      <input
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleInputChange}
-        placeholder="Password"
-      />
-
-      <button type="submit">Login</button>
-
-      {/* Inline handler for reset */}
-      <button
-        type="button"
-        onClick={() => setFormData({ username: "", password: "" })}
-      >
-        Reset Form
-      </button>
-    </form>
-  );
-}
-```
-
-### 3. Event Delegation and Parameters
-
-```jsx
-function TodoList() {
-  const [todos, setTodos] = useState([
-    { id: 1, text: "Learn React", completed: false },
-    { id: 2, text: "Build an app", completed: false },
-  ]);
-
-  // Method 1: Inline arrow function with parameters
-  const toggleTodoInline = (id) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
-  };
-
-  // Method 2: Separate function with parameters
-  const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
-
-  // Method 3: Event delegation approach
-  const handleTodoAction = (e) => {
-    const { action, id } = e.target.dataset;
-    const todoId = parseInt(id);
-
-    switch (action) {
-      case "toggle":
-        toggleTodoInline(todoId);
-        break;
-      case "delete":
-        deleteTodo(todoId);
-        break;
-      default:
-        break;
-    }
-  };
-
-  return (
-    <div>
-      <h3>Todo List</h3>
-      {todos.map((todo) => (
-        <div key={todo.id} className="todo-item">
-          <span
-            style={{
-              textDecoration: todo.completed ? "line-through" : "none",
-            }}
-          >
-            {todo.text}
-          </span>
-
-          {/* Method 1: Inline arrow function */}
-          <button onClick={() => toggleTodoInline(todo.id)}>
-            {todo.completed ? "Undo" : "Complete"}
-          </button>
-
-          {/* Method 2: Separate function */}
-          <button onClick={() => deleteTodo(todo.id)}>Delete</button>
-
-          {/* Method 3: Event delegation */}
-          <button
-            data-action="toggle"
-            data-id={todo.id}
-            onClick={handleTodoAction}
-          >
-            Toggle
-          </button>
-        </div>
-      ))}
-    </div>
-  );
-}
-```
-
-## Common Event Types
-
-### Mouse Events
-
-```jsx
-function MouseEvents() {
-  return (
-    <div>
-      <button onClick={() => console.log("Clicked")}>Click Me</button>
-
-      <button onDoubleClick={() => console.log("Double clicked")}>
-        Double Click
-      </button>
-
-      <div
-        onMouseEnter={() => console.log("Mouse entered")}
-        onMouseLeave={() => console.log("Mouse left")}
-        onMouseMove={() => console.log("Mouse moving")}
-        style={{ padding: "20px", border: "1px solid #ccc" }}
-      >
-        Hover over me
-      </div>
-    </div>
-  );
-}
-```
-
-### Keyboard Events
-
-```jsx
-function KeyboardEvents() {
-  const handleKeyDown = (e) => {
-    console.log("Key pressed:", e.key);
-
-    if (e.key === "Enter") {
-      console.log("Enter key pressed");
-    }
-
-    if (e.key === "Escape") {
-      console.log("Escape key pressed");
-    }
-  };
-
-  return (
-    <div>
-      <input
-        type="text"
-        onKeyDown={handleKeyDown}
-        onKeyUp={(e) => console.log("Key released:", e.key)}
-        placeholder="Type something..."
-      />
-    </div>
-  );
-}
-```
-
-### Form Events
-
-```jsx
-function FormEvents() {
-  const [value, setValue] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted with value:", value);
-  };
-
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-
-  const handleFocus = () => {
-    console.log("Input focused");
-  };
-
-  const handleBlur = () => {
-    console.log("Input blurred");
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={value}
-        onChange={handleChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        placeholder="Enter text..."
-      />
-      <button type="submit">Submit</button>
-    </form>
-  );
-}
-```
-
-## Best Practices for Event Handling
-
-### 1. ✅ Use Appropriate Method for the Situation
-
-```jsx
-function EventHandlingBestPractices() {
-  const [count, setCount] = useState(0);
-
-  // ✅ Good: Simple operations inline
-  const simpleIncrement = () => setCount((prev) => prev + 1);
-
-  // ✅ Good: Complex operations in separate functions
-  const complexOperation = () => {
-    // Multiple lines of logic
-    const timestamp = Date.now();
-    const newCount = count + 1;
-
-    // Log for analytics
-    console.log("Count incremented at:", timestamp);
-
-    // Update state
-    setCount(newCount);
-
-    // Additional side effects
-    if (newCount === 10) {
-      alert("You reached 10!");
-    }
-  };
-
-  return (
-    <div>
-      {/* Simple operation - inline is fine */}
-      <button onClick={() => setCount(count + 1)}>Simple Increment</button>
-
-      {/* Complex operation - separate function is better */}
-      <button onClick={complexOperation}>Complex Operation</button>
-    </div>
-  );
-}
-```
-
-### 2. ✅ Prevent Performance Issues
-
-```jsx
-// ❌ Bad: Creates new function on every render
-function BadPerformance({ items }) {
-  return (
-    <div>
-      {items.map((item) => (
-        <button key={item.id} onClick={() => console.log(item.id)}>
-          {item.name}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-// ✅ Good: Use useCallback for expensive operations
-function GoodPerformance({ items }) {
-  const handleItemClick = useCallback((id) => {
-    console.log("Item clicked:", id);
-  }, []);
-
-  return (
-    <div>
-      {items.map((item) => (
-        <button key={item.id} onClick={() => handleItemClick(item.id)}>
-          {item.name}
-        </button>
-      ))}
-    </div>
-  );
-}
-```
-
-### 3. ✅ Handle Edge Cases
-
-```jsx
-function RobustEventHandling() {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleAsyncOperation = async () => {
-    // Prevent multiple clicks
-    if (isLoading) return;
-
-    try {
-      setIsLoading(true);
-      await someAsyncOperation();
-    } catch (error) {
-      console.error("Operation failed:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-
-    // Validate form data
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-
-    if (!data.email || !data.password) {
-      alert("Please fill in all required fields");
-      return;
-    }
-
-    // Submit form
-    submitForm(data);
-  };
-
-  return (
-    <div>
-      <button onClick={handleAsyncOperation} disabled={isLoading}>
-        {isLoading ? "Processing..." : "Start Operation"}
-      </button>
-
-      <form onSubmit={handleFormSubmit}>
-        <input type="email" name="email" required />
-        <input type="password" name="password" required />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  );
-}
-```
-
-## Summary
-
-Event handling in React offers multiple approaches:
-
-1. **Inline ES5 functions** - Rarely used, legacy approach
-2. **Inline arrow functions** - Most common for simple operations
-3. **Separate function declarations** - Good for complex logic, hoisted
-4. **Separate function expressions** - Modern approach, not hoisted, preferred
-
-### When to Use Each:
-
-- **Inline arrow functions**: Simple operations, single statements
-- **Separate functions**: Complex logic, reusable operations, better performance
-- **Function expressions**: Modern codebase, when you want to avoid hoisting
-- **Function declarations**: When you need hoisting or traditional function syntax
-
-Choose the approach that best fits your use case, considering factors like:
-
-- Complexity of the logic
-- Performance requirements
-- Code readability
-- Team coding standards
-- Reusability needs
-
-Understanding all these approaches will help you read other developers' code and choose the most appropriate method for your specific situation.
+The grandchild executes the function, which was passed by the parent, which was passed by the grandparent! 🎯
