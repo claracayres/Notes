@@ -1350,9 +1350,6 @@ src/
 ```
 
 # Data flow in React
-
-## 📝 Class Notes - Data Flow in React
-
 ### Main Concept
 
 - **Unidirectional flow**: Data in React always flows from parent to child
