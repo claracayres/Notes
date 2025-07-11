@@ -1910,3 +1910,60 @@ useContext(Context) → context value
 
 🎯 Remember: Hooks = Functions that start with "use"
 ```
+
+## Prop Drilling
+
+As you’ve learned previously, **prop drilling** is when you pass data from a parent to a child component, then to a grandchild, and so on, until it reaches a deeply nested component that actually needs it.
+
+Here’s a simple example to illustrate prop drilling in React:
+
+```jsx
+function App() {
+  return <Main msg="I passed through the Header and the Wrapper and I reached the Button component" />;
+}
+
+function Main(props) {
+  return <Header msg={props.msg} />;
+}
+
+function Header(props) {
+  return (
+    <div style={{ border: "10px solid whitesmoke", padding: "10px" }}>
+      <h1>Header here</h1>
+      <Wrapper msg={props.msg} />
+    </div>
+  );
+}
+
+function Wrapper(props) {
+  return (
+    <div style={{ border: "5px solid lightgray", padding: "10px" }}>
+      <h2>Wrapper here</h2>
+      <Button msg={props.msg} />
+    </div>
+  );
+}
+
+function Button(props) {
+  return (
+    <div>
+      <h3>This is the Button component</h3>
+      <button onClick={() => alert(props.msg)}>Click me!</button>
+    </div>
+  );
+}
+```
+
+**What’s happening here?**
+
+- The `App` component passes a `msg` prop to `Main`.
+- `Main` passes `msg` to `Header`.
+- `Header` passes `msg` to `Wrapper`.
+- `Wrapper` passes `msg` to `Button`.
+- Only `Button` actually uses `msg`, but every component in the chain must pass it along.
+
+This is called **prop drilling**. In small apps, it’s not a big deal, but as your component tree grows deeper, it can become repetitive and hard to manage. That’s why React offers solutions like Context to avoid unnecessary prop drilling.
+
+**Takeaway:**  
+Prop drilling means passing props through many layers just so a deeply nested component can use them. It’s a common pattern, but there are better ways to manage deeply shared data as your app grows.
+#
