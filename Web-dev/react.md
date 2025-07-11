@@ -1350,6 +1350,7 @@ src/
 ```
 
 # Data flow in React
+
 ### Main Concept
 
 - **Unidirectional flow**: Data in React always flows from parent to child
@@ -1727,4 +1728,185 @@ function ChaoticComponent() {
 Grandparent → Parent (callback function) → Grandchild (executes callback)
 ```
 
-The grandchild executes the function, which was passed by the parent, which was passed by the grandparent! 🎯
+# Using Hooks - Quick Summary
+
+### What are Hooks?
+
+- **Functions** that let you "hook into" React features
+- Allow you to use state and other React features in functional components
+- Start with "use" (useState, useEffect, useContext, etc.)
+
+### useState Hook - The Basics
+
+#### Simple Input Example
+
+```jsx
+import { useState } from "react";
+
+export default function InputComponent() {
+  const [inputText, setText] = useState("hello");
+
+  function handleChange(e) {
+    setText(e.target.value);
+  }
+
+  return (
+    <div>
+      <input value={inputText} onChange={handleChange} />
+      <p>You typed: {inputText}</p>
+      <button onClick={() => setText("hello")}>Reset</button>
+    </div>
+  );
+}
+```
+
+#### Multiple Form Fields
+
+```jsx
+import { useState } from "react";
+
+export default function RegisterForm() {
+  const [form, setForm] = useState({
+    firstName: "Luke",
+    lastName: "Jones",
+    email: "lukeJones@sculpture.com",
+  });
+
+  const handleChange = (field, value) => {
+    setForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  return (
+    <div>
+      <input
+        value={form.firstName}
+        onChange={(e) => handleChange("firstName", e.target.value)}
+        placeholder="First Name"
+      />
+      <input
+        value={form.lastName}
+        onChange={(e) => handleChange("lastName", e.target.value)}
+        placeholder="Last Name"
+      />
+      <input
+        value={form.email}
+        onChange={(e) => handleChange("email", e.target.value)}
+        placeholder="Email"
+      />
+    </div>
+  );
+}
+```
+
+### useRef Hook - DOM Access
+
+```jsx
+import { useRef } from "react";
+
+function TextInputWithFocusButton() {
+  const inputEl = useRef(null);
+
+  const onButtonClick = () => {
+    // `current` points to the mounted text input element
+    inputEl.current.focus();
+  };
+
+  return (
+    <>
+      <input ref={inputEl} type="text" />
+      <button onClick={onButtonClick}>Focus the input</button>
+    </>
+  );
+}
+```
+
+### Hook Rules (IMPORTANT!)
+
+```
+🚨 HOOK RULES - NEVER BREAK THESE:
+
+1. ✅ Only call hooks at the TOP LEVEL of components
+2. ❌ Never call hooks inside loops, conditions, or nested functions
+3. ✅ Only call hooks from React functions (components or custom hooks)
+4. ❌ Never call hooks from regular JavaScript functions
+
+Example of WRONG usage:
+❌ if (condition) { useState(0); }  // DON'T DO THIS!
+❌ for (let i = 0; i < 5; i++) { useState(i); }  // DON'T DO THIS!
+
+Example of CORRECT usage:
+✅ const [state, setState] = useState(0);  // At top level
+✅ if (condition) { setState(newValue); }  // Use state inside conditions, not declare
+```
+
+### State Tips
+
+#### ✅ Local State
+
+```jsx
+// State is LOCAL to each component
+function Component1() {
+  const [count, setCount] = useState(0); // This count is only for Component1
+  return <div>{count}</div>;
+}
+
+function Component2() {
+  const [count, setCount] = useState(0); // This is a DIFFERENT count for Component2
+  return <div>{count}</div>;
+}
+```
+
+#### ✅ Object State
+
+```jsx
+// Better: Use object for related data
+const [user, setUser] = useState({
+  name: "",
+  email: "",
+  age: 0,
+});
+
+// Update object state correctly
+setUser((prev) => ({
+  ...prev,
+  name: "New Name",
+}));
+```
+
+### Common Hook Use Cases
+
+```jsx
+// Form handling
+const [formData, setFormData] = useState({ name: "", email: "" });
+
+// Toggle states
+const [isVisible, setIsVisible] = useState(false);
+
+// Counters
+const [count, setCount] = useState(0);
+
+// Lists
+const [items, setItems] = useState([]);
+
+// Loading states
+const [isLoading, setIsLoading] = useState(true);
+
+// DOM references
+const inputRef = useRef(null);
+```
+
+### Quick Reference
+
+```
+📋 HOOKS CHEAT SHEET:
+
+useState(initialValue) → [value, setValue]
+useRef(initialValue) → { current: value }
+useEffect(() => {}, [deps]) → side effects
+useContext(Context) → context value
+
+🎯 Remember: Hooks = Functions that start with "use"
+```
