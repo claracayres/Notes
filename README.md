@@ -67,9 +67,11 @@ Notes/
 │   └── random-tricks.md
 └── README.md
 ```
+
 ---
 
 ## 📄 Notes by Topic
+
 Click below to explore the notes (links will update as content grows):
 
 💻 [Git](./Git/useful-commands.md) – Commands and workflows
@@ -93,6 +95,7 @@ Click below to explore the notes (links will update as content grows):
 ---
 
 ## 🛠 Tools & Technologies
+
 This repo mainly uses:
 
 - Markdown .md
@@ -110,9 +113,11 @@ This repo mainly uses:
 ```
 git clone https://github.com/claracayres/Notes.git
 ```
+
 Open the repo in VS Code or navigate through folders manually to explore and update notes.
 
 ## 💡 Contributions
+
 This is a personal brain dump — but if you’ve got ideas, cool references, or corrections, feel free to open an issue or message me.
 
 With 💙,<br>

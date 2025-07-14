@@ -1919,7 +1919,9 @@ Here’s a simple example to illustrate prop drilling in React:
 
 ```jsx
 function App() {
-  return <Main msg="I passed through the Header and the Wrapper and I reached the Button component" />;
+  return (
+    <Main msg="I passed through the Header and the Wrapper and I reached the Button component" />
+  );
 }
 
 function Main(props) {
@@ -1966,4 +1968,5 @@ This is called **prop drilling**. In small apps, it’s not a big deal, but as y
 
 **Takeaway:**  
 Prop drilling means passing props through many layers just so a deeply nested component can use them. It’s a common pattern, but there are better ways to manage deeply shared data as your app grows.
+
 #

@@ -26,7 +26,7 @@
 - Email providers (Gmail, Outlook)
 - Map applications (Google Maps)
 - Video platforms (YouTube, Netflix)
-
+ll
 **How SPAs Work:**
 
 - User interacts without downloading entire new webpages
@@ -451,3 +451,158 @@ const params = useParams();            // Route parameters
 ```
 
 This navigation system is what makes React applications feel like modern, responsive single-page applications while maintaining the illusion of traditional multi-page navigation for users.
+
+## Applying Conditional Rendering
+
+State is all the data your app is currently working with. With this in mind, you can decide to conditionally render specific components in your app, based on whether specific state data has specific values. React enables this using standard JavaScript syntax and concepts.
+
+### Example: Minimal Productivity App
+
+Suppose you want to display a different message depending on whether it's a workday or the weekend:
+
+- **Workdays:** “Get it done”
+- **Weekends:** “Get some rest”
+
+#### Approach 1: Separate Components
+
+You can create two components, `Workdays` and `Weekends`, and render one based on the current day:
+
+```jsx
+function Workdays() {
+    return <h2>Get it done</h2>;
+}
+
+function Weekends() {
+    return <h2>Get some rest</h2>;
+}
+
+function CurrentMessage() {
+    const day = new Date().getDay();
+    if (day >= 1 && day <= 5) {
+        return <Workdays />;
+    }
+    return <Weekends />;
+}
+```
+
+#### Approach 2: Using Props
+
+If you want to use a value from props (e.g., historical data or user input):
+
+```jsx
+function CurrentMessage({ day }) {
+    if (day >= 1 && day <= 5) {
+        return <Workdays />;
+    }
+    return <Weekends />;
+}
+```
+
+#### Approach 3: Element Variables
+
+You can use element variables to separate logic from rendering:
+
+```jsx
+function CurrentMessage({ day }) {
+    const weekday = day >= 1 && day <= 5;
+    const weekend = day === 0 || day === 6;
+    let message;
+
+    if (weekday) {
+        message = <Workdays />;
+    } else if (weekend) {
+        message = <Weekends />;
+    } else {
+        message = <h2>Invalid day</h2>;
+    }
+
+    return <div>{message}</div>;
+}
+```
+
+### Conditional Rendering with Logical AND (`&&`)
+
+You can also use the logical AND operator to conditionally render elements:
+
+```jsx
+function LogicalAndExample() {
+    const val = prompt("Anything but a 0");
+
+    return (
+        <div>
+            <h1>Please don't type in a zero</h1>
+            {val && <h2>Yay, no 0 was typed in!</h2>}
+        </div>
+    );
+}
+```
+
+If `val` is truthy, the `<h2>` will render. If `val` is falsy (e.g., `0`, `null`, `""`), nothing will render in its place.
+
+**Summary:**  
+Conditional rendering in React is a powerful pattern that lets you display different UI based on state or props, using standard JavaScript control flow and operators.
+
+---
+
+## Conditional Components
+
+Have you ever visited a website that required a user account? To log in, you click a **Log in** button, and once you’ve logged in, the button changes to **Log out**. This is achieved using **conditional rendering**.
+
+Conditional rendering lets you display different components or UI based on certain conditions—often using `if` or `switch` statements, or logical operators.
+
+### Example: Conditional Button
+
+Suppose you have two components: `LoginButton` and `LogoutButton`. In a parent component, you can render one or the other based on a prop or state:
+
+```jsx
+function LoginButton() {
+    return <button>Log in</button>;
+}
+
+function LogoutButton() {
+    return <button>Log out</button>;
+}
+
+function LogInOutButton(props) {
+    const isLoggedIn = props.isLoggedIn;
+    if (isLoggedIn) {
+        return <LogoutButton />;
+    } else {
+        return <LoginButton />;
+    }
+}
+
+// Usage
+<LogInOutButton isLoggedIn={false} />
+```
+
+### Principle
+
+Conditional rendering is built on the same principle as conditional logic in JavaScript:
+
+```js
+let name;
+if (Math.random() > 0.5) {
+    name = "Mike";
+} else {
+    name = "Susan";
+}
+```
+
+Or with multiple conditions:
+
+```js
+let name;
+let newUser = true;
+if (Math.random() > 0.5 && newUser) {
+    name = "Mike";
+} else {
+    name = "Susan";
+}
+```
+
+### Summary
+
+- Conditional rendering lets you show different UI based on props or state.
+- Use `if`, `switch`, or logical operators to control what gets rendered.
+- This pattern is common for authentication, toggling UI, and more in React apps.

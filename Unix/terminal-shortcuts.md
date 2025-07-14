@@ -1,5 +1,7 @@
 ## System information
+
 Provide information about the system, including the operating system, hardware, and software versions.
+
 ```
 $ uname
 # Show the Unix system information
@@ -29,12 +31,13 @@ $ su
 # Switch to the superuser (root) account; use this before a command that requires root privileges e.g. `su shutdown`
 
 $ shutdown
-# Shut down the system; use this to shut down the system cleanly, e.g. `shutdown 
+# Shut down the system; use this to shut down the system cleanly, e.g. `shutdown
 ```
 
-
 ## Bash commands
+
 Bash provides a list of commands for navigating through files, viewing the contents of files, and edit features for changing or updating the contents of a file. Below is a list of the most common commands:
+
 ```
 $ cd
 # Change the directory to the specified path
