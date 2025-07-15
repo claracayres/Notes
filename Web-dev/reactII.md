@@ -606,3 +606,50 @@ if (Math.random() > 0.5 && newUser) {
 - Conditional rendering lets you show different UI based on props or state.
 - Use `if`, `switch`, or logical operators to control what gets rendered.
 - This pattern is common for authentication, toggling UI, and more in React apps.
+
+## Bundling Assets
+
+Earlier, you learned what assets are in React and best practices for storing them in your project folders.
+
+### What is Bundling?
+
+Bundling is the process of taking all the imported files in your app—JavaScript, CSS, images, and more—and combining them into one or more files called bundles. This is handled by tools like **webpack**, which is the default bundler used by Create React App.
+
+#### Why Use a Bundler?
+
+- **Dependency Management:** Modern apps have many dependencies and imports. Bundlers build a dependency graph and ensure everything loads in the correct order.
+- **Transpiling:** Bundlers can convert modern JavaScript (ES6+) into code that older browsers understand.
+- **Optimization:** Bundlers can minify code, optimize assets, and split code for faster loading.
+- **Asset Handling:** They process non-JS files (like CSS, images, SVGs) so they can be imported and used in your app.
+
+#### Example: Imports in a React App
+
+```js
+import React from 'react';
+import './index.css';
+import logo from './logo.svg';
+import { ThemeProvider } from './contexts/theme';
+```
+
+Each import can bring in more dependencies, creating a complex graph that bundlers manage for you.
+
+### Webpack Modes
+
+- **Development Mode:** Fast rebuilds, source maps for debugging, optimized for local development.
+- **Production Mode:** Minified, optimized bundles for fast downloads and performance in production.
+
+### Bundling Trade-offs
+
+- **Single Bundle:** Simple for small apps, but can slow down loading for large apps.
+- **Code Splitting:** Breaks bundles into smaller chunks, loading only what's needed (lazy loading).
+- **SSR (Server-Side Rendering):** Renders React components to HTML on the server for faster initial load.
+- **Client-Side Rendering:** Loads a minimal HTML file and lets React render everything in the browser.
+
+### Asset-Heavy Apps
+
+- **Pros:** Richer user experience, more features.
+- **Cons:** Larger bundles can slow down initial load, especially on slow networks.
+- **Solutions:** Use code splitting, optimize images, and consider SSR for critical content.
+
+**Summary:**  
+Bundling is essential for managing dependencies, optimizing performance, and ensuring compatibility in modern React apps. Tools like webpack automate this process, but it's important to balance asset usage and bundle size for the best user experience.
