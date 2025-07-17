@@ -609,8 +609,6 @@ if (Math.random() > 0.5 && newUser) {
 
 ## Bundling Assets
 
-Earlier, you learned what assets are in React and best practices for storing them in your project folders.
-
 ### What is Bundling?
 
 Bundling is the process of taking all the imported files in your app—JavaScript, CSS, images, and more—and combining them into one or more files called bundles. This is handled by tools like **webpack**, which is the default bundler used by Create React App.
@@ -653,3 +651,57 @@ Each import can bring in more dependencies, creating a complex graph that bundle
 
 **Summary:**  
 Bundling is essential for managing dependencies, optimizing performance, and ensuring compatibility in modern React apps. Tools like webpack automate this process, but it's important to balance asset usage and bundle size for the best user experience.
+
+## Media Packages
+
+In this reading, you’ll learn how to install and use the `react-player` npm package.
+
+You can find this package on npmjs.org:  
+https://www.npmjs.com/package/react-player
+
+### Installation
+
+To install the package, run the following command in your terminal:
+
+```bash
+npm install react-player
+```
+
+### Importing the Package
+
+To use the full functionality of `react-player`, import it like this:
+
+```js
+import ReactPlayer from "react-player";
+```
+
+If you only need support for a specific provider (e.g., YouTube) to reduce bundle size, import just that part:
+
+```js
+import ReactPlayer from "react-player/youtube";
+```
+
+### Example Usage
+
+Here’s a simple example of using `react-player` in a React app:
+
+```jsx
+import React from "react";
+import ReactPlayer from "react-player/youtube";
+
+function MyVideo() {
+  return (
+    <ReactPlayer url="https://www.youtube.com/watch?v=dQw4w9WgXcQ" controls />
+  );
+}
+
+function App() {
+  return (
+    <div>
+      <MyVideo />
+    </div>
+  );
+}
+
+export default App;
+```
