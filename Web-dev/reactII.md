@@ -26,8 +26,8 @@
 - Email providers (Gmail, Outlook)
 - Map applications (Google Maps)
 - Video platforms (YouTube, Netflix)
-ll
-**How SPAs Work:**
+  ll
+  **How SPAs Work:**
 
 - User interacts without downloading entire new webpages
 - Rewrites current webpage as user interacts
@@ -469,19 +469,19 @@ You can create two components, `Workdays` and `Weekends`, and render one based o
 
 ```jsx
 function Workdays() {
-    return <h2>Get it done</h2>;
+  return <h2>Get it done</h2>;
 }
 
 function Weekends() {
-    return <h2>Get some rest</h2>;
+  return <h2>Get some rest</h2>;
 }
 
 function CurrentMessage() {
-    const day = new Date().getDay();
-    if (day >= 1 && day <= 5) {
-        return <Workdays />;
-    }
-    return <Weekends />;
+  const day = new Date().getDay();
+  if (day >= 1 && day <= 5) {
+    return <Workdays />;
+  }
+  return <Weekends />;
 }
 ```
 
@@ -491,10 +491,10 @@ If you want to use a value from props (e.g., historical data or user input):
 
 ```jsx
 function CurrentMessage({ day }) {
-    if (day >= 1 && day <= 5) {
-        return <Workdays />;
-    }
-    return <Weekends />;
+  if (day >= 1 && day <= 5) {
+    return <Workdays />;
+  }
+  return <Weekends />;
 }
 ```
 
@@ -504,19 +504,19 @@ You can use element variables to separate logic from rendering:
 
 ```jsx
 function CurrentMessage({ day }) {
-    const weekday = day >= 1 && day <= 5;
-    const weekend = day === 0 || day === 6;
-    let message;
+  const weekday = day >= 1 && day <= 5;
+  const weekend = day === 0 || day === 6;
+  let message;
 
-    if (weekday) {
-        message = <Workdays />;
-    } else if (weekend) {
-        message = <Weekends />;
-    } else {
-        message = <h2>Invalid day</h2>;
-    }
+  if (weekday) {
+    message = <Workdays />;
+  } else if (weekend) {
+    message = <Weekends />;
+  } else {
+    message = <h2>Invalid day</h2>;
+  }
 
-    return <div>{message}</div>;
+  return <div>{message}</div>;
 }
 ```
 
@@ -526,14 +526,14 @@ You can also use the logical AND operator to conditionally render elements:
 
 ```jsx
 function LogicalAndExample() {
-    const val = prompt("Anything but a 0");
+  const val = prompt("Anything but a 0");
 
-    return (
-        <div>
-            <h1>Please don't type in a zero</h1>
-            {val && <h2>Yay, no 0 was typed in!</h2>}
-        </div>
-    );
+  return (
+    <div>
+      <h1>Please don't type in a zero</h1>
+      {val && <h2>Yay, no 0 was typed in!</h2>}
+    </div>
+  );
 }
 ```
 
@@ -556,24 +556,24 @@ Suppose you have two components: `LoginButton` and `LogoutButton`. In a parent c
 
 ```jsx
 function LoginButton() {
-    return <button>Log in</button>;
+  return <button>Log in</button>;
 }
 
 function LogoutButton() {
-    return <button>Log out</button>;
+  return <button>Log out</button>;
 }
 
 function LogInOutButton(props) {
-    const isLoggedIn = props.isLoggedIn;
-    if (isLoggedIn) {
-        return <LogoutButton />;
-    } else {
-        return <LoginButton />;
-    }
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return <LogoutButton />;
+  } else {
+    return <LoginButton />;
+  }
 }
 
 // Usage
-<LogInOutButton isLoggedIn={false} />
+<LogInOutButton isLoggedIn={false} />;
 ```
 
 ### Principle
@@ -583,9 +583,9 @@ Conditional rendering is built on the same principle as conditional logic in Jav
 ```js
 let name;
 if (Math.random() > 0.5) {
-    name = "Mike";
+  name = "Mike";
 } else {
-    name = "Susan";
+  name = "Susan";
 }
 ```
 
@@ -595,9 +595,9 @@ Or with multiple conditions:
 let name;
 let newUser = true;
 if (Math.random() > 0.5 && newUser) {
-    name = "Mike";
+  name = "Mike";
 } else {
-    name = "Susan";
+  name = "Susan";
 }
 ```
 
@@ -623,10 +623,10 @@ Bundling is the process of taking all the imported files in your app—JavaScrip
 #### Example: Imports in a React App
 
 ```js
-import React from 'react';
-import './index.css';
-import logo from './logo.svg';
-import { ThemeProvider } from './contexts/theme';
+import React from "react";
+import "./index.css";
+import logo from "./logo.svg";
+import { ThemeProvider } from "./contexts/theme";
 ```
 
 Each import can bring in more dependencies, creating a complex graph that bundlers manage for you.
