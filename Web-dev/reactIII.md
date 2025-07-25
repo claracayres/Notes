@@ -33,6 +33,6 @@ Suppose you have an array of names and want to display each name in a list:
 
 Key points:
 
-.map() takes each item in the array and returns a new <li> element.
+.map() takes each item in the array and returns a new `<li>` element.
 The key prop helps React track each item for efficient updates.
 This is the standard way to render lists in React using mapping.
