@@ -2,37 +2,96 @@
 
 ## Filtering
 
-Creates a copy of the array, filtered down to just the elements from the original array that pass the test. It will return a new list with just the elements that fulfil the condition.
-```js
-const numbers = [1, 2, 3, 4, 5];
-const evenNumbers = numbers.filter(num => num % 2 === 0);
+- Use `.filter()` to create a new array with only the elements that pass a test.
+- Example:
+  ```js
+  const numbers = [1, 2, 3, 4, 5];
+  const evenNumbers = numbers.filter(num => num % 2 === 0);
+  // evenNumbers: [2, 4]
+  ```
 
-console.log(evenNumbers); // Output: [2, 4]
-```
 ## Sorting
 
-Sorts the elements of an array based on a comparison functional provided.
-```js
-const fruits = ['banana', 'apple', 'cherry'];
-const sortedFruits = fruits.sort();
-
-console.log(sortedFruits); // Output: ['apple', 'banana', 'cherry']
-
-const numbers = [10, 2, 5, 1];
-const sortedNumbers = numbers.sort((a, b) => a - b);
-
-console.log(sortedNumbers); // Output: [1, 2, 5, 10]
-```
+- Use `.sort()` to order array elements.
+- For strings, default sort works:
+  ```js
+  const fruits = ['banana', 'apple', 'cherry'];
+  fruits.sort(); // ['apple', 'banana', 'cherry']
+  ```
+- For numbers, provide a compare function:
+  ```js
+  const numbers = [10, 2, 5, 1];
+  numbers.sort((a, b) => a - b); // [1, 2, 5, 10]
+  ```
 
 ## Mapping
 
-Mapping usually means using JavaScript's .map() function to transform an array of data into an array of React elements. This is a common way to render lists dynamically.
+- Use `.map()` to transform arrays, often to React elements.
+- Example: render a list from an array of names.
+  ```jsx
+  const names = ['Alice', 'Bob', 'Charlie'];
+  <ul>
+    {names.map((name, index) => (
+      <li key={index}>{name}</li>
+    ))}
+  </ul>
+  ```
+- Always use a unique `key` prop for list items.
 
-Example
-Suppose you have an array of names and want to display each name in a list:
+## Key
 
-Key points:
+- `key` prop helps React track list items for efficient updates.
+- Prefer unique values (like IDs or names) over array indexes.
+  ```jsx
+  const desserts = [
+    { name: "Tiramisu", calories: 300 },
+    { name: "Pudding", calories: 250 },
+  ];
+  <ul>
+    {desserts.map((dessert) => (
+      <li key={dessert.name}>
+        {dessert.name} - {dessert.calories} cal
+      </li>
+    ))}
+  </ul>
+  ```
 
-.map() takes each item in the array and returns a new `<li>` element.
-The key prop helps React track each item for efficient updates.
-This is the standard way to render lists in React using mapping.
+## Controlled vs. Uncontrolled Components
+
+### Controlled
+
+- Input value managed by React state.
+- Enables instant validation, disabling buttons, enforcing formats.
+  ```jsx
+  const [value, setValue] = useState("");
+  <input value={value} onChange={e => setValue(e.target.value)} />
+  ```
+
+### Uncontrolled
+
+- Input value managed by the DOM.
+- Access value via `ref`, good for simple forms.
+  ```jsx
+  const inputRef = useRef(null);
+  // inputRef.current.value
+  ```
+
+### File Inputs
+
+- Always uncontrolled; access files via `ref`.
+
+### Feature Comparison
+
+| Feature                                   | Uncontrolled | Controlled |
+|--------------------------------------------|:------------:|:----------:|
+| One-time value retrieval                   |      ✔️      |     ✔️     |
+| Validating on submit                       |      ✔️      |     ✔️     |
+| Instant field validation                   |      ❌      |     ✔️     |
+| Conditionally disabling submit button      |      ❌      |     ✔️     |
+| Enforcing input format                     |      ❌      |     ✔️     |
+| Several inputs for one piece of data       |      ❌      |     ✔️     |
+| Dynamic inputs                             |      ❌      |     ✔️     |
+
+- Controlled: use for advanced features.
+- Uncontrolled: fine for basic forms.
+- Choose based on needs.
