@@ -400,3 +400,40 @@ If `props.desserts.length` is `0`, `0` will be rendered. To avoid this, ensure t
 ### Conclusion
 
 JSX children can be strings, elements, expressions, or functions. Special values like `false`, `null`, and `undefined` are ignored, but numbers like `0` are rendered. Use boolean expressions for conditional rendering.
+
+## Higher-order components
+### Best Practices and Caveats for Higher-Order Components (HOCs)
+
+- **Never mutate the original component:** Always return a new component; do not modify the input component.
+- **Pass unrelated props:** Spread and forward all props not related to the HOC’s concern for flexibility.
+- **Maximize composability:** Prefer the `Component => Component` signature for easy composition with utilities like `compose`.
+- **Avoid creating HOCs inside components:** Always define enhanced components outside render functions to prevent remounting and state loss.
+- **Refs are not passed through:** Use `React.forwardRef` if you need to forward refs to the wrapped component.
+
+**Summary:**  
+HOCs should be pure, composable, and flexible. Avoid mutation, forward props, and be aware of caveats like ref handling and component scope.
+
+## Continuous integration
+
+Continuous Integration (CI) is a development practice where code changes are frequently merged into a shared repository, triggering automated builds and tests. This approach helps catch errors early and streamlines the integration process.
+
+## Why Use CI?
+
+CI shortens feedback loops, reduces manual work, and minimizes integration errors. Automated tests run on every commit, ensuring code quality and preventing faulty changes from being merged.
+
+## Typical CI Workflow
+
+1. Developer creates a branch and pushes changes to GitHub.
+2. CI system builds the code and runs tests automatically.
+3. If tests fail, the developer is notified to fix issues.
+4. If tests pass, the code can be deployed to staging for further QA.
+
+## Benefits
+
+- Boosts developer productivity by automating repetitive tasks.
+- Delivers working software more frequently.
+- Detects bugs early, making them easier to fix.
+
+## Conclusion
+
+CI improves code quality, speeds up development, and enables teams to deliver reliable software efficiently.
