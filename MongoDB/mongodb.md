@@ -3,6 +3,7 @@
 ## Basic Commands
 
 ### Database Operations
+
 ```bash
 # Show all databases
 show dbs
@@ -18,6 +19,7 @@ db.dropDatabase()
 ```
 
 ### Collection Operations
+
 ```bash
 # Create collection
 db.createCollection("collection_name")
@@ -32,6 +34,7 @@ db.collection_name.drop()
 ## CRUD Operations
 
 ### Create (Insert)
+
 ```bash
 # Insert one document
 db.collection_name.insertOne({field1: "value1", field2: "value2"})
@@ -44,6 +47,7 @@ db.collection_name.insertMany([
 ```
 
 ### Read (Query)
+
 ```bash
 # Find all documents
 db.collection_name.find()
@@ -62,6 +66,7 @@ db.collection_name.countDocuments()
 ```
 
 ### Update
+
 ```bash
 # Update one document
 db.collection_name.updateOne(
@@ -77,6 +82,7 @@ db.collection_name.updateMany(
 ```
 
 ### Delete
+
 ```bash
 # Delete one document
 db.collection_name.deleteOne({field1: "value1"})
@@ -88,6 +94,7 @@ db.collection_name.deleteMany({field1: "value1"})
 ## Advanced Queries
 
 ### Query Operators
+
 ```bash
 # Greater than
 db.collection_name.find({field1: {$gt: 100}})
@@ -109,6 +116,7 @@ db.collection_name.find({field1: {$in: ["value1", "value2"]}})
 ```
 
 ### Sorting and Limiting
+
 ```bash
 # Sort (1 for ascending, -1 for descending)
 db.collection_name.find().sort({field1: 1})
@@ -124,6 +132,7 @@ db.collection_name.find().sort({field1: 1}).skip(10).limit(5)
 ```
 
 ### Aggregation
+
 ```bash
 # Basic aggregation
 db.collection_name.aggregate([
@@ -133,6 +142,7 @@ db.collection_name.aggregate([
 ```
 
 ## Indexes
+
 ```bash
 # Create index
 db.collection_name.createIndex({field1: 1})
@@ -145,6 +155,7 @@ db.collection_name.dropIndex("index_name")
 ```
 
 ## Administration Commands
+
 ```bash
 # Server status
 db.serverStatus()
