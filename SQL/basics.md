@@ -221,3 +221,39 @@ Syntax:
 ```sql
 DROP TABLE table_name:
 ```
+
+### SELECT TOP
+Used to limit the number of values to return.
+
+Syntax for sql server/ms access:
+
+```sql
+SELECT TOP number|percent column_name(s)
+FROM table_name
+WHERE condition; 
+```
+
+For MySql you can use LIMIT and for Oracle 12+ FETCH FIRST n ROWS ONLY.
+
+### Aggregate Func
+Performs a calculation on a set of values, and returns a single value.
+
+|Common AGG|
+-----------
+|MIN()|
+|MAX()
+|COUNT()|
+|SUM()|
+|AVG()|
+
+### LIKE
+Used to search for a specfied pattern.
+
+### Wildcards
+
+% - for multiple characters.
+_ - for a single character.
+[] - single characters within the brackets.
+^ - any character not in brackets.
+- - single character within the specified range.
+{} - any escaped character.
