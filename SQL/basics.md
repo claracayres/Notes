@@ -22,8 +22,8 @@ to select all columns
 
 #### SELECT DISTINCT
 Used to return only distinct (unique) values.
-    Syntax:
 
+    Syntax:
     ```sql
     SELECT DISTINCT column1, column2, ...
     FROM table_name;
@@ -49,6 +49,7 @@ Example:
 ```sql
 SELECT * FROM Customers
 WHERE Country = 'Mexico';
+```
 Syntax:
 ```sql
 SELECT column1, column2, ...
@@ -192,3 +193,10 @@ DELETE FROM table_name WHERE condition;
 ```
 
 *If you omit the WHERE clause, the data will be deleted without deleting the table.*
+
+To delete a table you can use DROP.
+
+Syntax:
+```sql
+DROP TABLE table_name:
+```
