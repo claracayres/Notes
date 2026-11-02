@@ -9,48 +9,53 @@ The data in RDBMS is stored in database objects called tables. A table is a coll
 ### SELECT
 Used to select data from a database.
 
-    Syntax:
-    ```sql
-    SELECT column1, column2, ...
-    FROM table_name;
-    ```
+Syntax:
+```sql
+SELECT column1, column2, ...
+FROM table_name;
+```
+
 to select all columns
 
-    ```sql
-    SELECT * FROM table_name;
-    ```
+```sql
+SELECT * FROM table_name;
+```
 
 #### SELECT DISTINCT
 Used to return only distinct (unique) values.
 
-    Syntax:
-    ```sql
-    SELECT DISTINCT column1, column2, ...
-    FROM table_name;
-    ```
+Syntax:
+
+```sql
+SELECT DISTINCT column1, column2, ...
+FROM table_name;
+```
 
 By using the COUNT() function with the DISTINCT keyword, we can count the number of unique values.
 
-    ```sql
-    SELECT COUNT(DISTINCT column) FROM table_name;
-    ```
+```sql
+SELECT COUNT(DISTINCT column) FROM table_name;
+```
 
-    *The COUNT(DISTINCT column_name) is not supported in Microsoft Access databases.*
+*The COUNT(DISTINCT column_name) is not supported in Microsoft Access databases.*
 
-    Workaround for MS Access:
-    ```sql
-    SELECT Count(*) AS DistinctCountries
-    FROM (SELECT DISTINCT Country FROM Customers);
-    ```
+Workaround for MS Access:
+```sql
+SELECT Count(*) AS DistinctCountries
+FROM (SELECT DISTINCT Country FROM Customers);
+```
 
 ### WHERE
 Used to filter records, extract onlu those records that fulfill a specific condition.
 Example:
+
 ```sql
 SELECT * FROM Customers
 WHERE Country = 'Mexico';
 ```
+
 Syntax:
+
 ```sql
 SELECT column1, column2, ...
 FROM table_name;
@@ -77,13 +82,17 @@ Can be used operators other than the ```=``` to filter a search.
 ###  ORDER BY
 Used to sort the result-set in ascending or descending order.
 ASC for default.
+
 Syntax:
+
 ```sql
 SELECT column1, column2, ...
 FROM table_name
 ORDER BY column1, column2, ... ASC|DESC;
 ```
+
 DESC
+
 ```sql
 SELECT * FROM Products
 ORDER BY Price DESC; 
@@ -98,6 +107,7 @@ This means that it sorts it first by Country, and if some records have the same 
 SELECT * FROM Customers
 ORDER BY Country, CustomerName; 
 ```
+
 Combine ASC and DESC:
 ```sql
 SELECT * FROM Customers
@@ -110,6 +120,7 @@ Used to filter records based on more the one condition.
 *Displays a record if <b>all</b> the conditions are TRUE*
 
 Syntax:
+
 ```sql
 SELECT column1, column2, ...;
 FROM table_name;
@@ -120,7 +131,9 @@ WHERE condition1 AND condition2 AND condition3 ...;
 Used to filter records based on more than one condition.
 
 The OR operator displays a record if any of the conditions are TRUE.
+
 Syntax:
+
 ```sql
 SELECT column1, column2, ...
 FROM table_name
@@ -129,6 +142,7 @@ WHERE condition1 OR condition2 OR condition3 ...;
 OR and AND can be combined.
 
 Example:
+
 ```sql
 SELECT * FROM Customers;
 WHERE Country = 'Spain' AND (CustomerName LIKE 'G%' OR CustomerName LIKE 'R%'); 
@@ -145,6 +159,7 @@ Used to return values where records DO NOT match the specified condition.
 |NOT EXISTS|
 
 Syntax:
+
 ```sql
 SELECT column1, column2, ...
 FROM table_name
@@ -153,7 +168,9 @@ WHERE NOT condition;
 
 ### INSERT INTO
 Used to insert new content in a table.
+
 Syntax:
+
 ```sql
 INSERT INTO table_name (column1, column2, column3, ...)
 VALUES (value1, value2, value3, ...); 
@@ -166,6 +183,7 @@ To test a null value:
 IS NULL and IS NOT NULL
 
 Syntax:
+
 ```sql
 SELECT column_names
 FROM table_name
@@ -176,6 +194,7 @@ WHERE column_name IS (NOT) NULL;
 Used to update or modify values in a table.
 
 Syntax:
+
 ```sql
 UPDATE table_name
 SET column1 = value1, column2 = value2, ...
@@ -188,6 +207,7 @@ WHERE condition;
 Used to Delete data from a table.
 
 Syntax:
+
 ```sql
 DELETE FROM table_name WHERE condition;
 ```
@@ -197,6 +217,7 @@ DELETE FROM table_name WHERE condition;
 To delete a table you can use DROP.
 
 Syntax:
+
 ```sql
 DROP TABLE table_name:
 ```
